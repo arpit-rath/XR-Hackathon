@@ -1,0 +1,16 @@
+# Action detector (Member 2). Versions that ran on the training machine on 20 Nov 2026 (Python 3.10, WSL2 Ubuntu 22.04).
+# Also needs: ffmpeg/ffprobe on PATH, ActionFormer at 61ea7eb with its NMS extension built
+# (cd libs/utils && python setup.py install), epic-kitchens-slowfast at bf50519.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+numpy==1.23.5
+pandas==2.3.3
+pyyaml==6.0.3
+h5py==3.16.0
+av==17.1.0
+fvcore==0.1.5.post20221221
+iopath==0.1.10
+simplejson
+joblib
+tensorboard
