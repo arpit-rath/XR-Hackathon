@@ -1,0 +1,1 @@
+﻿{'WARNING': 'Diagnostic on Samsung evaluation videos, computed after the model was frozen. Not used for training, validation, model selection or tuning.', 'n_videos': 47, 'label_accuracy': 0.9574, 'importance_f1_top15_mean': 0.226, 'importance_spearman_mean': 0.208, 'random_baseline_f1_top15_mean': 0.1499}

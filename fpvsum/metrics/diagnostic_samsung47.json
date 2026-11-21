@@ -1,0 +1,433 @@
+{
+  "WARNING": "Diagnostic on Samsung evaluation videos, computed after the model was frozen. Not used for training, validation, model selection or tuning.",
+  "n_videos": 47,
+  "label_accuracy": 0.9574,
+  "importance_f1_top15_mean": 0.226,
+  "importance_spearman_mean": 0.208,
+  "random_baseline_f1_top15_mean": 0.1499,
+  "per_video": [
+    {
+      "video_id": "Bike_lhTFVa0h9Rk",
+      "true_category": "bike",
+      "pred_category": "bike",
+      "confidence": 0.6065,
+      "f1_top15": 0.2791,
+      "spearman": 0.0953,
+      "random_f1_top15": 0.1407
+    },
+    {
+      "video_id": "Bike_OeE9EIIKmrA",
+      "true_category": "bike",
+      "pred_category": "bike",
+      "confidence": 0.6374,
+      "f1_top15": 0.2206,
+      "spearman": 0.4448,
+      "random_f1_top15": 0.1463
+    },
+    {
+      "video_id": "Bike_Q_maV87d1I8",
+      "true_category": "bike",
+      "pred_category": "bikepolo",
+      "confidence": 0.3939,
+      "f1_top15": 0.1379,
+      "spearman": -0.0147,
+      "random_f1_top15": 0.1431
+    },
+    {
+      "video_id": "Bike_x76VEPXYaI0",
+      "true_category": "bike",
+      "pred_category": "bike",
+      "confidence": 0.5749,
+      "f1_top15": 0.4595,
+      "spearman": 0.4125,
+      "random_f1_top15": 0.1568
+    },
+    {
+      "video_id": "BikePolo_5yf797Lh4Oc_1",
+      "true_category": "bikepolo",
+      "pred_category": "bikepolo",
+      "confidence": 0.7586,
+      "f1_top15": 0.2,
+      "spearman": 0.3709,
+      "random_f1_top15": 0.1356
+    },
+    {
+      "video_id": "BikePolo_ccTGFdD18SM_1",
+      "true_category": "bikepolo",
+      "pred_category": "bikepolo",
+      "confidence": 0.8126,
+      "f1_top15": 0.12,
+      "spearman": 0.2492,
+      "random_f1_top15": 0.152
+    },
+    {
+      "video_id": "BikePolo_DHbYfmjX3WQ_1",
+      "true_category": "bikepolo",
+      "pred_category": "bikepolo",
+      "confidence": 0.7685,
+      "f1_top15": 0.6471,
+      "spearman": 0.5186,
+      "random_f1_top15": 0.1549
+    },
+    {
+      "video_id": "BikePolo_DHbYfmjX3WQ_3",
+      "true_category": "bikepolo",
+      "pred_category": "bikepolo",
+      "confidence": 0.8447,
+      "f1_top15": 0.0588,
+      "spearman": 0.0193,
+      "random_f1_top15": 0.1588
+    },
+    {
+      "video_id": "Boxing_6kDWXla9bMU",
+      "true_category": "boxing",
+      "pred_category": "boxing",
+      "confidence": 0.7676,
+      "f1_top15": 0.4135,
+      "spearman": 0.1439,
+      "random_f1_top15": 0.149
+    },
+    {
+      "video_id": "Boxing_gCsPzyhBxDY",
+      "true_category": "boxing",
+      "pred_category": "boxing",
+      "confidence": 0.7967,
+      "f1_top15": 0.1525,
+      "spearman": 0.0503,
+      "random_f1_top15": 0.1508
+    },
+    {
+      "video_id": "Boxing_mDOxBVYvDCU",
+      "true_category": "boxing",
+      "pred_category": "boxing",
+      "confidence": 0.8108,
+      "f1_top15": 0.275,
+      "spearman": 0.252,
+      "random_f1_top15": 0.1862
+    },
+    {
+      "video_id": "Horse_2otBDeLWCow",
+      "true_category": "horse",
+      "pred_category": "horse",
+      "confidence": 0.7367,
+      "f1_top15": 0.2162,
+      "spearman": 0.2045,
+      "random_f1_top15": 0.1588
+    },
+    {
+      "video_id": "Horse_7ZzWccM_5cM",
+      "true_category": "horse",
+      "pred_category": "horse",
+      "confidence": 0.5867,
+      "f1_top15": 0.5,
+      "spearman": 0.4919,
+      "random_f1_top15": 0.1545
+    },
+    {
+      "video_id": "Horse_C_2MSagUvms",
+      "true_category": "horse",
+      "pred_category": "horse",
+      "confidence": 0.5717,
+      "f1_top15": 0.08,
+      "spearman": 0.0077,
+      "random_f1_top15": 0.162
+    },
+    {
+      "video_id": "Horse_PEekyTcA8FU",
+      "true_category": "horse",
+      "pred_category": "horse",
+      "confidence": 0.5942,
+      "f1_top15": 0.1594,
+      "spearman": 0.1009,
+      "random_f1_top15": 0.142
+    },
+    {
+      "video_id": "Jumping__mU-p2wuk90",
+      "true_category": "jumping",
+      "pred_category": "jumping",
+      "confidence": 0.6017,
+      "f1_top15": 0.5641,
+      "spearman": 0.1705,
+      "random_f1_top15": 0.1449
+    },
+    {
+      "video_id": "Jumping_IPRT9MZh3_s",
+      "true_category": "jumping",
+      "pred_category": "jumping",
+      "confidence": 0.6644,
+      "f1_top15": 0.0943,
+      "spearman": -0.027,
+      "random_f1_top15": 0.1292
+    },
+    {
+      "video_id": "Jumping_kTzwvyzzfjk",
+      "true_category": "jumping",
+      "pred_category": "jumping",
+      "confidence": 0.6233,
+      "f1_top15": 0.04,
+      "spearman": 0.059,
+      "random_f1_top15": 0.15
+    },
+    {
+      "video_id": "Jumping_u_PL2jwfWy4",
+      "true_category": "jumping",
+      "pred_category": "jumping",
+      "confidence": 0.5081,
+      "f1_top15": 0.4857,
+      "spearman": 0.1351,
+      "random_f1_top15": 0.1571
+    },
+    {
+      "video_id": "Longboarding_Jec5YAjth6M",
+      "true_category": "longboarding",
+      "pred_category": "longboarding",
+      "confidence": 0.6466,
+      "f1_top15": 0.1892,
+      "spearman": 0.2871,
+      "random_f1_top15": 0.1419
+    },
+    {
+      "video_id": "Longboarding_sgXJldYfbAs",
+      "true_category": "longboarding",
+      "pred_category": "longboarding",
+      "confidence": 0.6312,
+      "f1_top15": 0.0732,
+      "spearman": 0.1964,
+      "random_f1_top15": 0.1573
+    },
+    {
+      "video_id": "Longboarding_vaJPwfOt7Bs",
+      "true_category": "longboarding",
+      "pred_category": "longboarding",
+      "confidence": 0.6367,
+      "f1_top15": 0.1967,
+      "spearman": 0.294,
+      "random_f1_top15": 0.1664
+    },
+    {
+      "video_id": "Motor_0JZi_gJ7Jfw",
+      "true_category": "motor",
+      "pred_category": "motor",
+      "confidence": 0.842,
+      "f1_top15": 0.2857,
+      "spearman": 0.3162,
+      "random_f1_top15": 0.1452
+    },
+    {
+      "video_id": "Motor_1vq82J1BUY8",
+      "true_category": "motor",
+      "pred_category": "motor",
+      "confidence": 0.7366,
+      "f1_top15": 0.1026,
+      "spearman": -0.0366,
+      "random_f1_top15": 0.159
+    },
+    {
+      "video_id": "Motor_G9Ud4mWGkRY",
+      "true_category": "motor",
+      "pred_category": "motor",
+      "confidence": 0.8019,
+      "f1_top15": 0.186,
+      "spearman": -0.0767,
+      "random_f1_top15": 0.143
+    },
+    {
+      "video_id": "Motor_tWEfvMZQ7j4",
+      "true_category": "motor",
+      "pred_category": "motor",
+      "confidence": 0.8226,
+      "f1_top15": 0.3279,
+      "spearman": 0.1545,
+      "random_f1_top15": 0.1328
+    },
+    {
+      "video_id": "Parkour_iQeKJuN7a9c",
+      "true_category": "parkour",
+      "pred_category": "parkour",
+      "confidence": 0.763,
+      "f1_top15": 0.0,
+      "spearman": -0.1949,
+      "random_f1_top15": 0.1608
+    },
+    {
+      "video_id": "Parkour_LTwzB3VUApA",
+      "true_category": "parkour",
+      "pred_category": "parkour",
+      "confidence": 0.6958,
+      "f1_top15": 0.303,
+      "spearman": 0.5146,
+      "random_f1_top15": 0.1455
+    },
+    {
+      "video_id": "Parkour_Oykjn35X3EY",
+      "true_category": "parkour",
+      "pred_category": "parkour",
+      "confidence": 0.6969,
+      "f1_top15": 0.2553,
+      "spearman": 0.4107,
+      "random_f1_top15": 0.15
+    },
+    {
+      "video_id": "Parkour_svfI-bTdMcI",
+      "true_category": "parkour",
+      "pred_category": "parkour",
+      "confidence": 0.6047,
+      "f1_top15": 0.082,
+      "spearman": -0.1018,
+      "random_f1_top15": 0.1574
+    },
+    {
+      "video_id": "Plane_QsL_gCDHWHA",
+      "true_category": "plane",
+      "pred_category": "plane",
+      "confidence": 0.1783,
+      "f1_top15": 0.0484,
+      "spearman": -0.0118,
+      "random_f1_top15": 0.1355
+    },
+    {
+      "video_id": "Plane_UM3DZadX_o4",
+      "true_category": "plane",
+      "pred_category": "jumping",
+      "confidence": 0.3918,
+      "f1_top15": 0.4828,
+      "spearman": 0.5934,
+      "random_f1_top15": 0.1431
+    },
+    {
+      "video_id": "Plane_Yz4CYVdRvvU",
+      "true_category": "plane",
+      "pred_category": "plane",
+      "confidence": 0.3554,
+      "f1_top15": 0.1515,
+      "spearman": 0.284,
+      "random_f1_top15": 0.1621
+    },
+    {
+      "video_id": "RockClimbing_EaKtFLoXTCI",
+      "true_category": "rockclimbing",
+      "pred_category": "rockclimbing",
+      "confidence": 0.5956,
+      "f1_top15": 0.0357,
+      "spearman": -0.1966,
+      "random_f1_top15": 0.1522
+    },
+    {
+      "video_id": "RockClimbing_mDUcIkDzpVI",
+      "true_category": "rockclimbing",
+      "pred_category": "rockclimbing",
+      "confidence": 0.7546,
+      "f1_top15": 0.0619,
+      "spearman": -0.1108,
+      "random_f1_top15": 0.142
+    },
+    {
+      "video_id": "RockClimbing_oVnAVcbMoSM",
+      "true_category": "rockclimbing",
+      "pred_category": "rockclimbing",
+      "confidence": 0.7384,
+      "f1_top15": 0.2,
+      "spearman": -0.0072,
+      "random_f1_top15": 0.142
+    },
+    {
+      "video_id": "Scuba__JnCVbCL5Wg",
+      "true_category": "scuba",
+      "pred_category": "scuba",
+      "confidence": 0.6793,
+      "f1_top15": 0.4138,
+      "spearman": 0.3891,
+      "random_f1_top15": 0.1509
+    },
+    {
+      "video_id": "Skate_3h8GZNyLpoU",
+      "true_category": "skate",
+      "pred_category": "skate",
+      "confidence": 0.7168,
+      "f1_top15": 0.0244,
+      "spearman": 0.3387,
+      "random_f1_top15": 0.1463
+    },
+    {
+      "video_id": "Skate_el49s-RlIa4",
+      "true_category": "skate",
+      "pred_category": "skate",
+      "confidence": 0.466,
+      "f1_top15": 0.2727,
+      "spearman": 0.3458,
+      "random_f1_top15": 0.1545
+    },
+    {
+      "video_id": "Ski_-Z5a4UQmZLs",
+      "true_category": "ski",
+      "pred_category": "ski",
+      "confidence": 0.5632,
+      "f1_top15": 0.4182,
+      "spearman": 0.4697,
+      "random_f1_top15": 0.1409
+    },
+    {
+      "video_id": "Ski_5PoL6Vp8GEw",
+      "true_category": "ski",
+      "pred_category": "ski",
+      "confidence": 0.534,
+      "f1_top15": 0.3906,
+      "spearman": 0.407,
+      "random_f1_top15": 0.168
+    },
+    {
+      "video_id": "Ski_5SH1-SAkYe0",
+      "true_category": "ski",
+      "pred_category": "ski",
+      "confidence": 0.5964,
+      "f1_top15": 0.1111,
+      "spearman": 0.416,
+      "random_f1_top15": 0.1722
+    },
+    {
+      "video_id": "Ski_UYmcm5bKvxk",
+      "true_category": "ski",
+      "pred_category": "ski",
+      "confidence": 0.5633,
+      "f1_top15": 0.3125,
+      "spearman": 0.4217,
+      "random_f1_top15": 0.1469
+    },
+    {
+      "video_id": "Surfing_7bzMGVKaiCQ",
+      "true_category": "surfing",
+      "pred_category": "surfing",
+      "confidence": 0.8101,
+      "f1_top15": 0.1905,
+      "spearman": 0.3103,
+      "random_f1_top15": 0.1286
+    },
+    {
+      "video_id": "Surfing_8mG4YzFZ9xU",
+      "true_category": "surfing",
+      "pred_category": "surfing",
+      "confidence": 0.7377,
+      "f1_top15": 0.1622,
+      "spearman": 0.3278,
+      "random_f1_top15": 0.1365
+    },
+    {
+      "video_id": "Surfing_BKwkLQr9ai8",
+      "true_category": "surfing",
+      "pred_category": "surfing",
+      "confidence": 0.8063,
+      "f1_top15": 0.24,
+      "spearman": 0.4504,
+      "random_f1_top15": 0.144
+    },
+    {
+      "video_id": "Surfing_G7lPf1gF-W4",
+      "true_category": "surfing",
+      "pred_category": "surfing",
+      "confidence": 0.8127,
+      "f1_top15": 0.0,
+      "spearman": -0.1012,
+      "random_f1_top15": 0.1492
+    }
+  ]
+}

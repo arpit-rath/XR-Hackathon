@@ -1,0 +1,29 @@
+{
+  "feature_extractor": {
+    "model": "OpenAI CLIP ViT-L/14 (open_clip arch 'ViT-L-14-quickgelu', pretrained='openai'), visual tower only, frozen",
+    "weights_file": "clip_vit_l14_visual_fp16.pt",
+    "embedding_dim": 768,
+    "preprocessing": {
+      "sampling": "ffmpeg fps filter at feature_fps (frame nearest to t = k / feature_fps)",
+      "resize": "bicubic, short side 224",
+      "crop": "center 224x224",
+      "color": "RGB, /255, normalize mean=[0.48145466,0.4578275,0.40821073] std=[0.26862954,0.26130258,0.27577711]",
+      "output": "L2-normalised 768-d embedding per sampled frame"
+    }
+  },
+  "feature_fps": 2.0,
+  "importance": {
+    "method": "clip_zeroshot_v1",
+    "trained": false,
+    "weights": {"relevance": 0.5, "novelty": 0.25, "dynamics": 0.25},
+    "smooth_sec": 1.0,
+    "dyn_window_sec": 4.0,
+    "note": "Training-free scorer; no importance labels used (see README: licensing of TVSum/SumMe)."
+  },
+  "category": {
+    "method": "linear probe on [mean,max]-pooled CLIP features blended with CLIP zero-shot prompts",
+    "head_file": "category_head.pt",
+    "alpha_probe": 0.5,
+    "temperature_zs": 100.0
+  }
+}
