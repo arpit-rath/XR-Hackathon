@@ -1,0 +1,4 @@
+﻿37 training-source videos; classes present: 14/14
+held-out split: 24 train / 13 val -> {'blend': 1.0, 'probe': 0.9231, 'zeroshot': 1.0}
+LOVO: {'blend': 0.973, 'probe': 0.8378, 'zeroshot': 0.973}
+saved final head + metrics

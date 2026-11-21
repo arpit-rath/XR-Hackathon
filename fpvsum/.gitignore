@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# 580 MB: exceeds GitHub's 100 MB limit. Use Git LFS or regenerate (see README).
+weights/clip_vit_l14_visual_fp16.pt
+*.mp4

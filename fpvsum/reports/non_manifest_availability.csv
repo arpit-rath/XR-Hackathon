@@ -1,0 +1,50 @@
+video_name,youtube_id,category,split,available,yt_duration_sec,error
+Bike_p2xBsiNca7c,p2xBsiNca7c,Bike,unlabeled,True,399,
+Bike_VHS6G7tiquU,VHS6G7tiquU,Bike,unlabeled,True,669,
+Bike_XGsCe8DOckU,XGsCe8DOckU,Bike,unlabeled,True,504,
+BikePolo_5yf797Lh4Oc_2,ls23daRKOhs,Bikepolo,unlabeled,True,298,
+BikePolo_ccTGFdD18SM_2,ZytBKcjhrD0,Bikepolo,unlabeled,True,415,
+BikePolo_DHbYfmjX3WQ_2,47ttP5pQCFM,Bikepolo,unlabeled,True,382,
+Boxing_BCTxmuIjnFU,BCTxmuIjnFU,Boxing,unlabeled,True,628,
+Boxing_HVtVpkkYGn0,HVtVpkkYGn0,Boxing,unlabeled,True,635,
+Boxing_p5eIrQPV4hY,p5eIrQPV4hY,Boxing,unlabeled,True,563,
+Boxing_t6fZDM5r23c,t6fZDM5r23c,Boxing,labeled,False,,ERROR: [youtube] t6fZDM5r23c: This video is unavailable
+Horse_ErLlVKvMFcE,ErLlVKvMFcE,Horse,unlabeled,True,596,
+Horse_NPyteemR6fA,NPyteemR6fA,Horse,unlabeled,True,1018,
+Horse_oiezhbSmGvk,oiezhbSmGvk,Horse,unlabeled,True,951,
+Jumping_9WCzIyWv0QE,9WCzIyWv0QE,Jumping,unlabeled,True,228,
+Jumping_nRmfeUJojVE,nRmfeUJojVE,Jumping,unlabeled,False,,"ERROR: [youtube] nRmfeUJojVE: Private video. If the owner of this video has granted you access, please sign in. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/"
+Jumping_RW4aVriYoDo,RW4aVriYoDo,Jumping,unlabeled,True,317,
+Longboarding_2khS8md_ZoE,2khS8md_ZoE,Longboarding,unlabeled,True,273,
+Longboarding_79ImZE0K7xc,79ImZE0K7xc,Longboarding,unlabeled,True,375,
+Longboarding_mB_wNyKDKNA,mB_wNyKDKNA,Longboarding,labeled,False,,"ERROR: [youtube] mB_wNyKDKNA: Private video. If the owner of this video has granted you access, please sign in. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/"
+Longboarding_Wv0j8k2MkKA,Wv0j8k2MkKA,Longboarding,unlabeled,True,346,
+Motor_b_tAKaMAGok,b_tAKaMAGok,Motor,unlabeled,True,294,
+Motor_cTLurPAsYLU,cTLurPAsYLU,Motor,unlabeled,True,244,
+Motor_dmnhql5He7o,dmnhql5He7o,Motor,unlabeled,True,313,
+Parkour_1rOJ7LWZ64A,1rOJ7LWZ64A,Parkour,unlabeled,True,218,
+Parkour_6ojPzimBnhw,6ojPzimBnhw,Parkour,unlabeled,True,215,
+Parkour_KzyAcME8RSM,KzyAcME8RSM,Parkour,unlabeled,True,287,
+Plane_O5gJU_UMjRk,O5gJU_UMjRk,Plane,labeled,False,,ERROR: [youtube] O5gJU_UMjRk: This video is unavailable
+Plane_vcXijnjAWaA,vcXijnjAWaA,Plane,unlabeled,True,325,
+Plane_rsRDZq14YYA,rsRDZq14YYA,Plane,unlabeled,True,357,
+Plane_2xhI9q84ckk,2xhI9q84ckk,Plane,unlabeled,True,443,
+RockClimbing_bMBvaNpN1fQ,bMBvaNpN1fQ,RockClimbing,unlabeled,True,535,
+RockClimbing_kz2HI7hVuHo,kz2HI7hVuHo,RockClimbing,unlabeled,True,714,
+RockClimbing_NLtw6ZO1ymM,NLtw6ZO1ymM,RockClimbing,labeled,False,,"ERROR: [youtube] NLtw6ZO1ymM: Private video. If the owner of this video has granted you access, please sign in. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/"
+RockClimbing_ntq5lbpBv_k,ntq5lbpBv_k,RockClimbing,unlabeled,True,791,
+Scuba_Dn019JIqbqE,Dn019JIqbqE,Scuba,unlabeled,True,523,
+Scuba_odrsHM10vOA,odrsHM10vOA,Scuba,labeled,False,,ERROR: [youtube] odrsHM10vOA: Video unavailable. This video is no longer available because the YouTube account associated with this video has been terminated.
+Scuba_TMXlmKh0bNM,TMXlmKh0bNM,Scuba,unlabeled,False,,ERROR: [youtube] TMXlmKh0bNM: This video is unavailable
+Scuba_VrW8dNiONUQ,VrW8dNiONUQ,Scuba,unlabeled,True,561,
+Skate_22mZXZIMBSk,22mZXZIMBSk,Skate,unlabeled,True,591,
+Skate_cVwvbI44jbY,cVwvbI44jbY,Skate,unlabeled,False,,"ERROR: [youtube] cVwvbI44jbY: Private video. If the owner of this video has granted you access, please sign in. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/"
+Skate_E6iK3b26mqc,E6iK3b26mqc,Skate,labeled,False,,ERROR: [youtube] E6iK3b26mqc: Video unavailable. This video is no longer available because the YouTube account associated with this video has been terminated.
+Skate_JmnnaRid4dM,JmnnaRid4dM,Skate,labeled,False,,ERROR: [youtube] JmnnaRid4dM: Video unavailable. This video is no longer available because the YouTube account associated with this video has been terminated.
+Skate_OporDjnbc3E,sS1Fn6RgxIY,Skate,unlabeled,True,253,
+Ski_aC6CagGdry4,aC6CagGdry4,Ski,unlabeled,False,,"ERROR: [youtube] aC6CagGdry4: Private video. If the owner of this video has granted you access, please sign in. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/"
+Ski_LUDTvrbuqMY,LUDTvrbuqMY,Ski,unlabeled,True,235,
+Ski_xNws9MIUpCg,xNws9MIUpCg,Ski,unlabeled,False,,ERROR: [youtube] xNws9MIUpCg: This video is not available
+Surfing_6_ao28Jwq7M,6_ao28Jwq7M,Surfing,unlabeled,True,363,
+Surfing_eJJXa5C5bK8,eJJXa5C5bK8,Surfing,unlabeled,True,201,
+Surfing_rJLflxN9Ijg,rJLflxN9Ijg,Surfing,unlabeled,True,355,

@@ -1,0 +1,11 @@
+2026-11-21  Workspace created: D:\XR_Hackathon\XR_Hackathon_FPVSum (D: has ~22 TB free)
+2026-11-21  System: Windows 11 Pro for Workstations. Found Python 3.12, Git. Missing: ffmpeg/ffprobe, yt-dlp.
+2026-11-21  Extracted Student package_track04 (1).zip -> samsung_kit\_extracted; copied files to samsung_kit\
+2026-11-21  Cloned https://github.com/azuxmioy/fpvsum (depth 1) -> original_fpvsum\fpvsum
+2026-11-21  manifest.csv schema: video_id,duration_sec,dataset ; 187 rows (138 epic_kitchens_100 + 49 fpvsum)
+2026-11-21  Original FPVSum_videolist.csv schema: video_name,youtube_id,category,split ; 98 rows
+2026-11-21  scripts\match_fpvsum.py -> reports\fpvsum_matched.csv : 49/49 exact matches, all split=labeled
+2026-11-21  NOTE: 4 BikePolo IDs do not contain their YouTube ID in the name; youtube_id column used.
+2026-11-21  Created .venv, pip installed yt-dlp 2026.10.26. Application Control policy blocks venv .exe shims;
+            use `.venv\Scripts\python.exe -m yt_dlp` instead.
+2026-11-21  Original repo docs specify NO trimming/clip procedure (downloader fetches full YouTube video).

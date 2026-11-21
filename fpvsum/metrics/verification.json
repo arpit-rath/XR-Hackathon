@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-21",
+  "exported_package_inference_test": {
+    "status": "PASSED",
+    "package_location_used": "unzipped copy of Member3_FPVSum_Trained_Model.zip in a separate scratch folder (not the workspace)",
+    "isolation": "python -I (no PYTHONPATH/user site), HF_HUB_OFFLINE=1, empty HF_HOME; weights loaded only from the package's weights/ folder",
+    "python_env": "Python 3.12, torch 2.5.1+cu121, torchvision 0.20.1, open_clip_torch 4.2.2, timm 1.0.31, numpy 2.5.2 (the working training environment)",
+    "test_video": "Ski_-Z5a4UQmZLs.mp4 (Samsung manifest video; never used in training or validation)",
+    "result": {
+      "duration_sec": 184.6,
+      "n_scores": 369,
+      "n_timestamps": 369,
+      "timestamps_first_last": [0.0, 184.0],
+      "score_range": [0.0, 1.0],
+      "label": {"name": "ski", "score": 0.5632},
+      "category_probs_sum": 1.0,
+      "agreement_with_cached_feature_run": {"pearson": 1.0, "max_abs_diff": 0.0001, "same_label": true},
+      "wall_time_sec_incl_model_load": 9.3
+    }
+  },
+  "fresh_pip_environment_test": {
+    "status": "PASSED",
+    "procedure": "Unzipped the rebuilt ZIP into a new scratch folder; created a NEW venv (python -m venv --system-site-packages); pip install -r requirements.txt; pip install --no-deps open_clip_torch==4.2.2 timm==1.0.31; ran inference with python -I, HF_HUB_OFFLINE=1, empty HF_HOME, cwd = unzipped package.",
+    "environment": "torch 2.5.1+cu121 (CUDA available), open_clip_torch 4.2.2, timm 1.0.31",
+    "caveat": "torch/torchvision were taken from the machine's system site-packages (not re-downloaded), because PyPI's torch wheel download stalled. All other packages were installed fresh from requirements.txt.",
+    "result": "label ski (0.5632), 369 timestamps/scores; identical label and max |score diff| 0.0001 vs. the reference run; 9.7 s",
+    "earlier_attempt": "An earlier attempt with the first requirements.txt (torch>=2.6) timed out downloading torch 2.6.0 from PyPI; requirements.txt was then pinned to the tested torch 2.5.1 combination."
+  }
+}

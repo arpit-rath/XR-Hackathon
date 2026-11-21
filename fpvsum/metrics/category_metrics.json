@@ -1,0 +1,434 @@
+{
+  "n_videos": 37,
+  "hyperparameters": {
+    "steps": 600,
+    "lr": 0.001,
+    "wd": 0.01,
+    "batch": 64,
+    "min_crop": 0.3,
+    "alpha_probe": 0.5,
+    "temperature_zs": 100.0,
+    "seed": 0
+  },
+  "heldout_split": {
+    "n_train": 24,
+    "n_val": 13,
+    "accuracy": {
+      "blend": 1.0,
+      "probe": 0.9231,
+      "zeroshot": 1.0
+    },
+    "per_video": [
+      {
+        "video": "Bike_VHS6G7tiquU",
+        "true": "bike",
+        "blend": "bike",
+        "blend_conf": 0.745,
+        "probe": "bike",
+        "zeroshot": "bike"
+      },
+      {
+        "video": "BikePolo_ccTGFdD18SM_2",
+        "true": "bikepolo",
+        "blend": "bikepolo",
+        "blend_conf": 0.721,
+        "probe": "bikepolo",
+        "zeroshot": "bikepolo"
+      },
+      {
+        "video": "Boxing_BCTxmuIjnFU",
+        "true": "boxing",
+        "blend": "boxing",
+        "blend_conf": 0.834,
+        "probe": "boxing",
+        "zeroshot": "boxing"
+      },
+      {
+        "video": "Horse_NPyteemR6fA",
+        "true": "horse",
+        "blend": "horse",
+        "blend_conf": 0.844,
+        "probe": "horse",
+        "zeroshot": "horse"
+      },
+      {
+        "video": "Jumping_RW4aVriYoDo",
+        "true": "jumping",
+        "blend": "jumping",
+        "blend_conf": 0.521,
+        "probe": "parkour",
+        "zeroshot": "jumping"
+      },
+      {
+        "video": "Longboarding_79ImZE0K7xc",
+        "true": "longboarding",
+        "blend": "longboarding",
+        "blend_conf": 0.83,
+        "probe": "longboarding",
+        "zeroshot": "longboarding"
+      },
+      {
+        "video": "Motor_cTLurPAsYLU",
+        "true": "motor",
+        "blend": "motor",
+        "blend_conf": 0.583,
+        "probe": "motor",
+        "zeroshot": "motor"
+      },
+      {
+        "video": "Parkour_6ojPzimBnhw",
+        "true": "parkour",
+        "blend": "parkour",
+        "blend_conf": 0.681,
+        "probe": "parkour",
+        "zeroshot": "parkour"
+      },
+      {
+        "video": "Plane_rsRDZq14YYA",
+        "true": "plane",
+        "blend": "plane",
+        "blend_conf": 0.505,
+        "probe": "plane",
+        "zeroshot": "plane"
+      },
+      {
+        "video": "RockClimbing_ntq5lbpBv_k",
+        "true": "rockclimbing",
+        "blend": "rockclimbing",
+        "blend_conf": 0.766,
+        "probe": "rockclimbing",
+        "zeroshot": "rockclimbing"
+      },
+      {
+        "video": "Scuba_Dn019JIqbqE",
+        "true": "scuba",
+        "blend": "scuba",
+        "blend_conf": 0.756,
+        "probe": "scuba",
+        "zeroshot": "scuba"
+      },
+      {
+        "video": "Skate_22mZXZIMBSk",
+        "true": "skate",
+        "blend": "skate",
+        "blend_conf": 0.585,
+        "probe": "skate",
+        "zeroshot": "skate"
+      },
+      {
+        "video": "Surfing_eJJXa5C5bK8",
+        "true": "surfing",
+        "blend": "surfing",
+        "blend_conf": 0.823,
+        "probe": "surfing",
+        "zeroshot": "surfing"
+      }
+    ]
+  },
+  "leave_one_video_out": {
+    "accuracy": {
+      "blend": 0.973,
+      "probe": 0.8378,
+      "zeroshot": 0.973
+    },
+    "per_video": [
+      {
+        "video": "Bike_p2xBsiNca7c",
+        "true": "bike",
+        "blend": "bike",
+        "blend_conf": 0.724,
+        "probe": "bike",
+        "zeroshot": "bike"
+      },
+      {
+        "video": "Bike_VHS6G7tiquU",
+        "true": "bike",
+        "blend": "bike",
+        "blend_conf": 0.698,
+        "probe": "bike",
+        "zeroshot": "bike"
+      },
+      {
+        "video": "Bike_XGsCe8DOckU",
+        "true": "bike",
+        "blend": "bike",
+        "blend_conf": 0.757,
+        "probe": "bike",
+        "zeroshot": "bike"
+      },
+      {
+        "video": "BikePolo_5yf797Lh4Oc_2",
+        "true": "bikepolo",
+        "blend": "bikepolo",
+        "blend_conf": 0.613,
+        "probe": "bikepolo",
+        "zeroshot": "bikepolo"
+      },
+      {
+        "video": "BikePolo_ccTGFdD18SM_2",
+        "true": "bikepolo",
+        "blend": "bikepolo",
+        "blend_conf": 0.676,
+        "probe": "bikepolo",
+        "zeroshot": "bikepolo"
+      },
+      {
+        "video": "BikePolo_DHbYfmjX3WQ_2",
+        "true": "bikepolo",
+        "blend": "bikepolo",
+        "blend_conf": 0.76,
+        "probe": "bikepolo",
+        "zeroshot": "bikepolo"
+      },
+      {
+        "video": "Boxing_BCTxmuIjnFU",
+        "true": "boxing",
+        "blend": "boxing",
+        "blend_conf": 0.792,
+        "probe": "boxing",
+        "zeroshot": "boxing"
+      },
+      {
+        "video": "Boxing_HVtVpkkYGn0",
+        "true": "boxing",
+        "blend": "boxing",
+        "blend_conf": 0.679,
+        "probe": "boxing",
+        "zeroshot": "boxing"
+      },
+      {
+        "video": "Boxing_p5eIrQPV4hY",
+        "true": "boxing",
+        "blend": "boxing",
+        "blend_conf": 0.757,
+        "probe": "boxing",
+        "zeroshot": "boxing"
+      },
+      {
+        "video": "Horse_ErLlVKvMFcE",
+        "true": "horse",
+        "blend": "horse",
+        "blend_conf": 0.554,
+        "probe": "horse",
+        "zeroshot": "horse"
+      },
+      {
+        "video": "Horse_NPyteemR6fA",
+        "true": "horse",
+        "blend": "horse",
+        "blend_conf": 0.797,
+        "probe": "horse",
+        "zeroshot": "horse"
+      },
+      {
+        "video": "Horse_oiezhbSmGvk",
+        "true": "horse",
+        "blend": "horse",
+        "blend_conf": 0.77,
+        "probe": "horse",
+        "zeroshot": "horse"
+      },
+      {
+        "video": "Jumping_9WCzIyWv0QE",
+        "true": "jumping",
+        "blend": "jumping",
+        "blend_conf": 0.53,
+        "probe": "rockclimbing",
+        "zeroshot": "jumping"
+      },
+      {
+        "video": "Jumping_RW4aVriYoDo",
+        "true": "jumping",
+        "blend": "jumping",
+        "blend_conf": 0.514,
+        "probe": "plane",
+        "zeroshot": "jumping"
+      },
+      {
+        "video": "Longboarding_2khS8md_ZoE",
+        "true": "longboarding",
+        "blend": "longboarding",
+        "blend_conf": 0.765,
+        "probe": "longboarding",
+        "zeroshot": "longboarding"
+      },
+      {
+        "video": "Longboarding_79ImZE0K7xc",
+        "true": "longboarding",
+        "blend": "longboarding",
+        "blend_conf": 0.773,
+        "probe": "longboarding",
+        "zeroshot": "longboarding"
+      },
+      {
+        "video": "Longboarding_Wv0j8k2MkKA",
+        "true": "longboarding",
+        "blend": "longboarding",
+        "blend_conf": 0.633,
+        "probe": "longboarding",
+        "zeroshot": "longboarding"
+      },
+      {
+        "video": "Motor_b_tAKaMAGok",
+        "true": "motor",
+        "blend": "motor",
+        "blend_conf": 0.559,
+        "probe": "motor",
+        "zeroshot": "motor"
+      },
+      {
+        "video": "Motor_cTLurPAsYLU",
+        "true": "motor",
+        "blend": "motor",
+        "blend_conf": 0.559,
+        "probe": "motor",
+        "zeroshot": "motor"
+      },
+      {
+        "video": "Motor_dmnhql5He7o",
+        "true": "motor",
+        "blend": "motor",
+        "blend_conf": 0.503,
+        "probe": "motor",
+        "zeroshot": "motor"
+      },
+      {
+        "video": "Parkour_1rOJ7LWZ64A",
+        "true": "parkour",
+        "blend": "parkour",
+        "blend_conf": 0.494,
+        "probe": "parkour",
+        "zeroshot": "parkour"
+      },
+      {
+        "video": "Parkour_6ojPzimBnhw",
+        "true": "parkour",
+        "blend": "parkour",
+        "blend_conf": 0.644,
+        "probe": "parkour",
+        "zeroshot": "parkour"
+      },
+      {
+        "video": "Parkour_KzyAcME8RSM",
+        "true": "parkour",
+        "blend": "parkour",
+        "blend_conf": 0.636,
+        "probe": "parkour",
+        "zeroshot": "parkour"
+      },
+      {
+        "video": "Plane_2xhI9q84ckk",
+        "true": "plane",
+        "blend": "jumping",
+        "blend_conf": 0.488,
+        "probe": "plane",
+        "zeroshot": "jumping"
+      },
+      {
+        "video": "Plane_rsRDZq14YYA",
+        "true": "plane",
+        "blend": "plane",
+        "blend_conf": 0.471,
+        "probe": "jumping",
+        "zeroshot": "plane"
+      },
+      {
+        "video": "Plane_vcXijnjAWaA",
+        "true": "plane",
+        "blend": "plane",
+        "blend_conf": 0.681,
+        "probe": "plane",
+        "zeroshot": "plane"
+      },
+      {
+        "video": "RockClimbing_bMBvaNpN1fQ",
+        "true": "rockclimbing",
+        "blend": "rockclimbing",
+        "blend_conf": 0.709,
+        "probe": "rockclimbing",
+        "zeroshot": "rockclimbing"
+      },
+      {
+        "video": "RockClimbing_kz2HI7hVuHo",
+        "true": "rockclimbing",
+        "blend": "rockclimbing",
+        "blend_conf": 0.677,
+        "probe": "rockclimbing",
+        "zeroshot": "rockclimbing"
+      },
+      {
+        "video": "RockClimbing_ntq5lbpBv_k",
+        "true": "rockclimbing",
+        "blend": "rockclimbing",
+        "blend_conf": 0.72,
+        "probe": "rockclimbing",
+        "zeroshot": "rockclimbing"
+      },
+      {
+        "video": "Scuba_Dn019JIqbqE",
+        "true": "scuba",
+        "blend": "scuba",
+        "blend_conf": 0.718,
+        "probe": "scuba",
+        "zeroshot": "scuba"
+      },
+      {
+        "video": "Scuba_VrW8dNiONUQ",
+        "true": "scuba",
+        "blend": "scuba",
+        "blend_conf": 0.639,
+        "probe": "scuba",
+        "zeroshot": "scuba"
+      },
+      {
+        "video": "Skate_22mZXZIMBSk",
+        "true": "skate",
+        "blend": "skate",
+        "blend_conf": 0.55,
+        "probe": "parkour",
+        "zeroshot": "skate"
+      },
+      {
+        "video": "Skate_OporDjnbc3E",
+        "true": "skate",
+        "blend": "skate",
+        "blend_conf": 0.452,
+        "probe": "parkour",
+        "zeroshot": "skate"
+      },
+      {
+        "video": "Ski_LUDTvrbuqMY",
+        "true": "ski",
+        "blend": "ski",
+        "blend_conf": 0.501,
+        "probe": "horse",
+        "zeroshot": "ski"
+      },
+      {
+        "video": "Surfing_6_ao28Jwq7M",
+        "true": "surfing",
+        "blend": "surfing",
+        "blend_conf": 0.663,
+        "probe": "surfing",
+        "zeroshot": "surfing"
+      },
+      {
+        "video": "Surfing_eJJXa5C5bK8",
+        "true": "surfing",
+        "blend": "surfing",
+        "blend_conf": 0.781,
+        "probe": "surfing",
+        "zeroshot": "surfing"
+      },
+      {
+        "video": "Surfing_rJLflxN9Ijg",
+        "true": "surfing",
+        "blend": "surfing",
+        "blend_conf": 0.697,
+        "probe": "surfing",
+        "zeroshot": "surfing"
+      }
+    ]
+  },
+  "note": "Validation uses only non-Samsung FPVSum videos. Samsung's 49 evaluation videos were not used."
+}
