@@ -676,6 +676,7 @@ loadList().then(() => api("/api/status")).then((s) => {
   const h = new URLSearchParams(location.hash.slice(1));
   if (h.get("v")) {
     await openVideo(h.get("v")); for (const q of h.getAll("q")) await ask(q);
+    if (h.get("json")) await toggleJson();  // #v=P01_12&json=1 opens the JSON output view
     const v = $("#vid"); if (v && h.get("t")) { v.currentTime = +h.get("t"); heads(+h.get("t")); }  // show a frame
   }
 });
