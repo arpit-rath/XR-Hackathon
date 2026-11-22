@@ -33,8 +33,17 @@ cp "$SF/LICENSE" "$DEST/code/third_party/epic-kitchens-slowfast/"
 find "$DEST/code" -name __pycache__ -type d -prune -exec rm -rf {} +
 
 for f in actionformer_epic_verb_epoch_020.pth.tar actionformer_epic_noun_epoch_020.pth.tar SlowFast.pyth clip_vit_l14_visual_fp16.pt; do
-  [ -f "$DEST/weights/$f" ] && cmp -s "$W/$f" "$DEST/weights/$f" || cp "$W/$f" "$DEST/weights/"
+  # same size = already copied (a byte compare of 1.8 GB across Windows drives takes half an hour)
+  if [ "$(stat -c %s "$W/$f")" != "$(stat -c %s "$DEST/weights/$f" 2>/dev/null)" ]; then
+    cp "$W/$f" "$DEST/weights/"; COPIED=1
+  fi
 done
 cp "$REPO"/fpvsum/weights/{category_head.pt,category_mapping.json,config.json,text_embeddings.pt,cooking_text_embedding.pt} "$DEST/weights/"
-(cd "$DEST/weights" && sha256sum * > ../WEIGHTS_SHA256SUMS.txt)
+if [ "${COPIED:-0}" = 1 ] || [ ! -f "$DEST/WEIGHTS_SHA256SUMS.txt" ]; then
+  (cd "$DEST/weights" && sha256sum * > ../WEIGHTS_SHA256SUMS.txt)
+else  # big files unchanged: refresh only the small ones' checksums
+  (cd "$DEST/weights" && { grep -E ' (actionformer|SlowFast|clip_vit)' ../WEIGHTS_SHA256SUMS.txt; \
+    sha256sum category_head.pt category_mapping.json config.json text_embeddings.pt cooking_text_embedding.pt; } > ../W.tmp \
+    && mv ../W.tmp ../WEIGHTS_SHA256SUMS.txt)
+fi
 echo "assembled $DEST: $(find "$DEST/code" -name '*.py' | wc -l) python files, weights $(du -sh "$DEST/weights" | cut -f1)"

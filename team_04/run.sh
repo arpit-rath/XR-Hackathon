@@ -3,8 +3,8 @@
 # Everything is computed from the video (code/run_video.py). Needs the environment in requirements.txt,
 # ffmpeg/ffprobe on PATH and an NVIDIA GPU (tested on a 6 GB RTX 4050 and a 48 GB RTX 6000 Ada).
 set -euo pipefail
-if [ $# -ne 2 ]; then
-  echo "Usage: ./run.sh <video.mp4> <out.json>" >&2
+if [ $# -lt 2 ]; then
+  echo "Usage: ./run.sh <video.mp4> <out.json> [--extra details.json]" >&2
   exit 2
 fi
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -26,4 +26,4 @@ if ! "$PY" -c "import torch, nms_1d_cpu" 2>/dev/null; then
   (cd "$ACTIONFORMER_DIR/libs/utils" && "$PY" setup.py install > /dev/null)
 fi
 
-exec "$PY" "$HERE/code/run_video.py" "$1" "$2"
+exec "$PY" "$HERE/code/run_video.py" "$@"

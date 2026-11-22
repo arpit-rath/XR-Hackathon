@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AURIS</title>
+<style>
+  :root {
+    --canvas: #090a0f; --s1: #12141a; --s2: #1a1d24; --s3: #222630;
+    --line: #272b35; --line-focus: #3e4452;
+    --em: #00d492; --em2: #10a37f; --em-soft: rgba(0, 212, 146, .10); --em-line: rgba(0, 212, 146, .30); --glow: 0 0 24px rgba(0, 212, 146, .25);
+    --az: #3b82f6; --az-soft: rgba(59, 130, 246, .14);
+    --t1: #f3f4f6; --t2: #9ca3af; --t3: #64748b; --warn: #f0a050;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", "Cascadia Code", Consolas, ui-monospace, monospace;
+    --fs-xs: clamp(10.5px, .68rem, 11.5px); --fs-sm: clamp(12px, .8rem, 13.5px); --fs-md: clamp(13px, .88rem, 14.5px);
+    --fs-body: clamp(14px, .95rem, 16px); --fs-h3: clamp(16px, 1.1rem, 20px); --fs-h2: clamp(20px, 1.5rem, 28px); --fs-h1: clamp(28px, 3.2vw, 44px);
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--canvas); color: var(--t1); font: 400 var(--fs-body)/1.6 var(--sans); letter-spacing: -.005em; -webkit-font-smoothing: antialiased; }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  svg.i { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .mono { font-family: var(--mono); }
+  .app { display: grid; grid-template-columns: 260px minmax(0, 1fr) auto; height: 100vh; }
+
+  /* ---------- sidebar ---------- */
+  .side { background: var(--s1); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 16px 16px 12px; cursor: pointer; }
+  .mark { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--em2), var(--em)); display: grid; place-items: center; color: #04140e; box-shadow: var(--glow); }
+  .mark svg { stroke: #04140e; width: 18px; height: 18px; }
+  .brand b { display: block; font-size: var(--fs-h3); letter-spacing: .08em; line-height: 1.1; }
+  .brand small { display: block; color: var(--em); font: 500 var(--fs-xs)/1.3 var(--mono); letter-spacing: .04em; }
+  .newbtn { margin: 4px 14px 10px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 0; border-radius: 10px;
+    background: linear-gradient(90deg, var(--em2), var(--em)); color: #04140e; font-weight: 650; font-size: var(--fs-md); }
+  .newbtn:hover { box-shadow: 0 0 16px rgba(0, 212, 146, .3); }
+  .newbtn .k { margin-left: auto; font: 500 var(--fs-xs) var(--mono); opacity: .65; }
+  .newbtn.busy { opacity: .5; pointer-events: none; }
+  .search { margin: 0 14px 6px; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--s2); border: 1px solid var(--line); color: var(--t3); }
+  .search input { border: 0; outline: 0; background: transparent; flex: 1; min-width: 0; font-size: var(--fs-md); color: var(--t1); }
+  .hist { flex: 1; overflow-y: auto; padding: 0 8px 12px; }
+  .hist::-webkit-scrollbar, .thread::-webkit-scrollbar, .cvbody::-webkit-scrollbar { width: 8px; }
+  .hist::-webkit-scrollbar-thumb, .thread::-webkit-scrollbar-thumb, .cvbody::-webkit-scrollbar-thumb { background: var(--s3); border-radius: 8px; }
+  .grp { display: flex; align-items: center; gap: 6px; padding: 16px 8px 6px; color: var(--t3); font: 500 var(--fs-xs) var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; user-select: none; }
+  .grp .n { margin-left: auto; }
+  .grp svg { width: 12px; height: 12px; transition: transform .15s; }
+  .grp.closed svg { transform: rotate(-90deg); }
+  .row { position: relative; display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 9px; cursor: pointer; font-size: var(--fs-md); color: #d6d8de; }
+  .row:hover { background: var(--s2); }
+  .row.on { background: var(--s3); color: var(--t1); }
+  .row.on::before { content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 3px; border-radius: 3px; background: var(--em); }
+  .row svg { color: var(--t3); }
+  .row .nm { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .row .sub { color: var(--t3); font: var(--fs-xs) var(--mono); }
+  .row .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--em); flex: none; }
+  .meter { margin: 10px 14px; padding: 12px; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); font: var(--fs-xs) var(--mono); color: var(--t2); }
+  .meter .top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .meter .top b { color: var(--em); font-weight: 500; }
+  .bar { height: 5px; border-radius: 5px; background: var(--s3); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--em2), var(--em)); border-radius: 5px; }
+  .who { display: flex; align-items: center; gap: 10px; padding: 12px 16px 16px; border-top: 1px solid var(--line); }
+  .ava { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--em-soft); border: 1px solid var(--em-line); color: var(--em); flex: none; }
+  .who b { display: block; font-size: var(--fs-md); }
+  .who small { color: var(--t3); font: var(--fs-xs) var(--mono); }
+
+  /* ---------- top bar ---------- */
+  .main { display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative;
+    background: radial-gradient(1200px 500px at 50% -10%, rgba(0, 212, 146, .06), transparent 60%), var(--canvas); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 12px 24px; }
+  .seg { display: flex; padding: 3px; gap: 2px; border-radius: 999px; background: var(--s1); border: 1px solid var(--line); }
+  .seg span { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: var(--fs-sm); color: var(--t2); white-space: nowrap; }
+  .seg span.on { background: var(--s3); color: var(--em); font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font: 500 var(--fs-xs) var(--mono); letter-spacing: .04em;
+    background: var(--em-soft); border: 1px solid var(--em-line); color: var(--em); white-space: nowrap; }
+  .badge.az { background: var(--az-soft); border-color: rgba(59, 130, 246, .35); color: #8fb4ff; }
+  .badge.dim { background: var(--s2); border-color: var(--line); color: var(--t2); }
+  .badge.warn { background: rgba(240, 160, 80, .1); border-color: rgba(240, 160, 80, .35); color: var(--warn); }
+  .pulse { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+  .ghost { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 10px; border: 1px solid var(--line); background: var(--s2); font-size: var(--fs-sm); }
+  .ghost:hover { border-color: var(--line-focus); background: var(--s3); }
+  .ghost.on { border-color: var(--em-line); color: var(--em); }
+  .spacer { flex: 1; }
+  .menu { display: none; border: 0; background: transparent; padding: 4px; color: var(--t2); }
+  .ctx { margin: 0 24px; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 12px; background: var(--s1); border: 1px solid var(--line); font-size: var(--fs-md); min-height: 44px; }
+  .ctx .lab { color: var(--em); font: 500 var(--fs-xs) var(--mono); letter-spacing: .08em; }
+  .ctx .sep { color: var(--t3); }
+  .ctx .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ctx .m { color: var(--t3); font: var(--fs-xs) var(--mono); white-space: nowrap; }
+  .ctx a { margin-left: auto; color: var(--t1); text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: var(--fs-sm); cursor: pointer; white-space: nowrap; }
+  .ctx a:hover { color: var(--em); }
+
+  /* ---------- thread ---------- */
+  .thread { flex: 1; overflow-y: auto; padding-bottom: 150px; }
+  .col { max-width: 820px; margin: 0 auto; padding: 18px 24px 24px; }
+  .u { display: flex; flex-direction: column; align-items: flex-end; margin: 26px 0; }
+  .u .meta { color: var(--t3); font: var(--fs-xs) var(--mono); margin-bottom: 6px; }
+  .u .body { max-width: 80%; background: var(--s2); border: 1px solid var(--line); padding: 14px 18px; border-radius: 20px 20px 6px 20px; white-space: pre-wrap; }
+  .b { margin: 26px 0; }
+  .bh { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .spark { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(from 200deg, var(--em), #22d3ee, var(--em2), var(--em)); padding: 2px; }
+  .spark i { width: 100%; height: 100%; border-radius: 50%; background: var(--canvas); display: grid; place-items: center; color: var(--em); font: 700 var(--fs-xs) var(--mono); font-style: normal; }
+  .bh b { font-size: var(--fs-md); letter-spacing: .04em; }
+  .bh .tele { margin-left: auto; color: var(--t3); font: var(--fs-xs) var(--mono); display: flex; align-items: center; gap: 6px; }
+  .strip { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 10px; background: var(--s1); border: 1px solid var(--line); margin-bottom: 12px; font-size: var(--fs-sm); color: var(--t2); }
+  .strip .lab { color: var(--em); font: 600 var(--fs-xs) var(--mono); letter-spacing: .08em; }
+  .b .body { white-space: pre-wrap; color: #e5e7eb; line-height: 1.65; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--s2); font-size: var(--fs-sm); transition: transform .15s, border-color .15s; }
+  .chip:hover { border-color: var(--em); color: var(--em); transform: translateX(2px); }
+  .chip.t { font-family: var(--mono); color: var(--em); border-color: var(--em-line); background: var(--em-soft); }
+  .typing { display: flex; gap: 5px; padding: 6px 0; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--em); animation: blink 1s infinite; }
+  .typing span:nth-child(2) { animation-delay: .15s; } .typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+  .acts { display: flex; gap: 6px; margin-top: 12px; }
+  .acts button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--s1); display: grid; place-items: center; color: var(--t2); }
+  .acts button:hover { color: var(--em); border-color: var(--em-line); }
+  .sugg-lab { color: var(--t3); font: 500 var(--fs-xs) var(--mono); letter-spacing: .08em; margin: 22px 0 4px; }
+
+  /* report card */
+  .report { margin-top: 14px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(180deg, var(--s1), #0d0f14); padding: 18px; }
+  .report h3 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: var(--fs-h3); font-weight: 600; letter-spacing: -.01em; }
+  .report .sub { color: var(--t2); font-size: var(--fs-sm); margin: 4px 0 14px; }
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .tile { background: var(--canvas); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+  .tile .k { color: var(--t3); font: 500 var(--fs-xs) var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+  .tile .v { font-size: var(--fs-h2); font-weight: 650; letter-spacing: -.02em; line-height: 1.25; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tile .v.em { color: var(--em); }
+  .tile .d { color: var(--t2); font-size: var(--fs-sm); }
+  .tlbox { margin-top: 12px; background: var(--canvas); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .tlhead { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font: var(--fs-xs) var(--mono); color: var(--t2); margin-bottom: 8px; }
+  .tlhead .sw { display: inline-block; width: 12px; height: 3px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .tl { height: 64px; cursor: pointer; }
+  .tl svg { width: 100%; height: 100%; display: block; }
+  .axis { display: flex; justify-content: space-between; color: var(--t3); font: var(--fs-xs) var(--mono); margin-top: 6px; }
+  .take { display: flex; gap: 12px; margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: rgba(0, 212, 146, .06); border: 1px solid rgba(0, 212, 146, .18); }
+  .take .ic { width: 30px; height: 30px; border-radius: 8px; background: var(--em-soft); color: var(--em); display: grid; place-items: center; flex: none; }
+  .take b { display: block; font-size: var(--fs-md); }
+  .take p { margin: 2px 0 0; color: #cbd5e1; font-size: var(--fs-sm); }
+
+  /* ---------- hero ---------- */
+  .hero { max-width: 1060px; margin: 0 auto; padding: 36px 24px 40px; text-align: center; }
+  .orb { width: 76px; height: 76px; margin: 10px auto 18px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--em); box-shadow: var(--glow), inset 0 0 18px rgba(0, 212, 146, .18); color: var(--em); position: relative; }
+  .orb svg { width: 34px; height: 34px; }
+  .orb::after { content: ""; position: absolute; right: -2px; bottom: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--em); border: 3px solid var(--canvas); }
+  .hero h1 { font-size: var(--fs-h1); font-weight: 650; letter-spacing: -.03em; line-height: 1.15; margin: 0; }
+  .hero h1 em { font-style: normal; color: var(--em); }
+  .hero .lead { color: #cbd5e1; font-size: var(--fs-h3); margin: 10px 0 16px; }
+  .caps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 38px; text-align: left; }
+  .card { display: flex; flex-direction: column; gap: 6px; padding: 22px 24px; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, var(--s2), var(--s1)); min-height: 196px; text-align: left; transition: border-color .15s; }
+  .card:hover { border-color: var(--line-focus); }
+  .card .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--s3); display: grid; place-items: center; color: var(--em); margin-bottom: 18px; }
+  .card .ic svg { width: 18px; height: 18px; }
+  .card b { font-size: var(--fs-h3); font-weight: 600; letter-spacing: -.01em; }
+  .card span.d { color: #cbd5e1; font-size: var(--fs-md); }
+  .card .f { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; color: var(--t3); font: 500 var(--fs-xs) var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+  .card .f svg { color: var(--em); }
+  .sechead { display: flex; align-items: center; gap: 10px; margin: 44px 0 14px; text-align: left; }
+  .sechead h2 { margin: 0; font-size: var(--fs-h2); font-weight: 600; letter-spacing: -.02em; }
+  .sechead svg { color: var(--em); width: 22px; height: 22px; }
+  .sechead a { margin-left: auto; color: var(--em); font-size: var(--fs-md); cursor: pointer; }
+  .gpts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; text-align: left; }
+  .gpt { padding: 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--s1); display: flex; flex-direction: column; gap: 4px; text-align: left; min-width: 0; }
+  .gpt:hover { border-color: var(--line-focus); background: var(--s2); }
+  .gpt .h { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .gpt .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--s3); display: grid; place-items: center; color: var(--em); }
+  .gpt .tag { color: var(--t2); font: var(--fs-xs) var(--mono); }
+  .gpt b { font-size: var(--fs-md); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gpt .d { color: var(--t2); font-size: var(--fs-sm); }
+  .gpt .f { margin-top: 12px; display: flex; justify-content: space-between; color: var(--t3); font: var(--fs-xs) var(--mono); }
+
+  /* ---------- composer ---------- */
+  .dock { position: absolute; left: 0; right: 0; bottom: 22px; padding: 0 24px; pointer-events: none; }
+  .omni { pointer-events: auto; max-width: 820px; margin: 0 auto; border-radius: 22px; background: rgba(26, 29, 36, .80); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 12px 40px rgba(0, 0, 0, .45); padding: 10px 12px 10px 14px; }
+  .omni .tools { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+  .omni .tools .tb { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid transparent; background: transparent; color: var(--t2); font-size: var(--fs-sm); }
+  .omni .tools .tb:hover { background: var(--s3); color: var(--t1); }
+  .omni .tools .hint { margin-left: auto; color: var(--t3); font: var(--fs-xs) var(--mono); }
+  .omni .line { display: flex; align-items: flex-end; gap: 8px; }
+  .omni textarea { flex: 1; border: 0; outline: 0; background: transparent; resize: none; padding: 8px 2px; max-height: 180px; line-height: 1.5; color: var(--t1); }
+  .omni textarea::placeholder { color: var(--t3); }
+  .rnd { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; border: 0; flex: none; }
+  .rnd.plain { background: transparent; color: var(--t2); border: 1px solid var(--line); }
+  .rnd.plain:hover { color: var(--em); border-color: var(--em-line); }
+  .rnd.go { background: linear-gradient(135deg, var(--em2), var(--em)); color: #04140e; box-shadow: var(--glow); }
+  .rnd.go svg { stroke-width: 2.4; }
+  .rnd.go:disabled { opacity: .35; box-shadow: none; cursor: default; }
+  .disc { text-align: center; color: var(--t3); font: var(--fs-xs) var(--mono); margin-top: 8px; pointer-events: none; }
+
+  /* ---------- video canvas ---------- */
+  .canvas { width: 0; overflow: hidden; background: var(--s1); border-left: 1px solid var(--line); transition: width .2s; min-height: 0; }
+  .canvas.open { width: min(500px, 38vw); }
+  .cvin { width: min(500px, 38vw); height: 100%; display: flex; flex-direction: column; }
+  .cvhead { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .cvhead .lab { font: 600 var(--fs-xs) var(--mono); letter-spacing: .08em; color: var(--t2); }
+  .rec { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+  .cvbody { flex: 1; overflow-y: auto; padding: 16px; }
+  .frame { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #000; position: relative; }
+  .frame video { width: 100%; display: block; max-height: 40vh; }
+  .frame .ov { position: absolute; left: 10px; top: 10px; }
+  .novid { padding: 40px 18px; text-align: center; color: var(--t2); background: var(--s2); border-radius: 14px; border: 1px solid var(--line); font-size: var(--fs-sm); }
+  .ctl { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; align-items: center; }
+  .jbtn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--em-line);
+    background: var(--em-soft); color: var(--em); font-weight: 600; font-size: var(--fs-sm); }
+  .jbtn:hover, .jbtn.on { background: rgba(0, 212, 146, .18); box-shadow: 0 0 12px rgba(0, 212, 146, .2); }
+  .jsonbox { margin: 0 0 12px; border: 1px solid var(--em-line); border-radius: 12px; background: var(--canvas); overflow: hidden; }
+  .jhead { display: flex; align-items: center; gap: 6px; padding: 8px 10px 6px 12px; border-bottom: 1px solid var(--line); background: var(--s1); }
+  .jhead .lab { font: 600 var(--fs-xs) var(--mono); letter-spacing: .06em; color: var(--em); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ghost.sm { padding: 4px 9px; font-size: var(--fs-xs); border-radius: 8px; text-decoration: none; color: var(--t1); }
+  .ghost.sm svg { width: 13px; height: 13px; }
+  .jmeta { padding: 6px 12px; color: var(--t2); font: var(--fs-xs) var(--mono); border-bottom: 1px solid var(--line); }
+  pre.json { margin: 0; padding: 10px 12px; max-height: 320px; overflow: auto; font: var(--fs-xs)/1.6 var(--mono); color: var(--t2); white-space: pre; }
+  pre.json:focus { outline: 1px solid var(--em-line); }
+  pre.json .jk { color: #7dd3fc; } pre.json .js { color: var(--em); } pre.json .jn { color: #fbbf24; } pre.json .jl { color: #c4b5fd; }
+  .pbtn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; border: 0; background: linear-gradient(90deg, var(--em2), var(--em)); color: #04140e; font-weight: 650; font-size: var(--fs-sm); }
+  .pbtn:disabled { opacity: .4; cursor: default; }
+  .mini { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mini .tile .v { font-size: var(--fs-h3); }
+  details { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--s2); }
+  summary { padding: 10px 14px; cursor: pointer; font: 600 var(--fs-xs) var(--mono); letter-spacing: .08em; color: var(--t2); list-style: none; display: flex; align-items: center; gap: 8px; }
+  summary::-webkit-details-marker { display: none; }
+  .evs { max-height: 320px; overflow-y: auto; border-top: 1px solid var(--line); }
+  .ev { display: flex; gap: 12px; align-items: center; padding: 6px 14px; font-size: var(--fs-sm); cursor: pointer; }
+  .ev:hover { background: var(--s3); }
+  .ev .t { font: var(--fs-xs) var(--mono); color: var(--em); width: 40px; }
+  .ev .s { margin-left: auto; font: var(--fs-xs) var(--mono); color: var(--t3); }
+  .ev .cf { width: 6px; height: 6px; border-radius: 50%; }
+
+  #drop { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(9, 10, 15, .7); backdrop-filter: blur(6px); pointer-events: none; }
+  #drop div { padding: 30px 40px; border-radius: 20px; border: 2px dashed var(--em); color: var(--em); background: var(--s1); font-size: var(--fs-h3); font-weight: 600; box-shadow: var(--glow); }
+  #drop.on { display: grid; }
+
+  @media (max-width: 1100px) { .gpts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: minmax(0, 1fr); }
+    .side { position: fixed; z-index: 20; inset: 0 auto 0 0; width: 280px; transform: translateX(-100%); transition: transform .2s; box-shadow: 0 0 40px rgba(0, 0, 0, .6); }
+    .side.show { transform: none; }
+    .menu { display: block; }
+    .seg span:not(.on) { display: none; }
+    .topbar, .ctx { margin-left: 0; margin-right: 0; padding-left: 14px; padding-right: 14px; }
+    .ctx { margin: 0 14px; }
+    .canvas { position: fixed; z-index: 15; left: 0; right: 0; bottom: 0; width: 100% !important; height: 0; border-left: 0; border-top: 1px solid var(--line); }
+    .canvas.open { height: 58vh; }
+    .cvin { width: 100%; }
+    .cards { grid-template-columns: minmax(0, 1fr); }
+    .card { min-height: 0; }
+    .col, .hero { padding-left: 14px; padding-right: 14px; }
+    .dock { padding: 0 10px; bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand" id="brand"><div class="mark" id="mk"></div><div><b>AURIS</b><small>Video Workspace</small></div></div>
+    <button class="newbtn" id="newbtn" title="Upload a video to analyse (or drag it onto the page)"><span id="plus"></span>New analysis<span class="k">⌘K</span></button>
+    <label class="search"><span id="srch"></span><input id="search" placeholder="Search videos…"></label>
+    <div class="hist" id="hist"></div>
+    <div class="meter"><div class="top"><span>Offline index</span><b id="mcount">0 videos</b></div><div class="bar"><i id="mbar" style="width:0"></i></div>
+      <div class="top" style="margin:8px 0 0"><span id="mstat">Local model: checking</span><span id="mmodel" style="color:var(--em)"></span></div></div>
+    <div class="who"><div class="ava" id="who"></div><div><b>Team Modern Global</b><small>Samsung PRISM · Track 04</small></div></div>
+  </aside>
+
+  <section class="main">
+    <div class="topbar">
+      <button class="menu" id="menu" aria-label="Videos"></button>
+      <div class="seg"><span class="on" id="segv"></span><span id="segl"></span></div>
+      <span class="badge" id="ready"><span class="pulse"></span>Ready</span>
+      <span class="spacer"></span>
+      <button class="ghost" id="cvbtn" hidden></button>
+    </div>
+    <div class="ctx" id="ctx"></div>
+    <div class="thread" id="thread"></div>
+    <div class="dock">
+      <form class="omni" id="form">
+        <div class="tools">
+          <button type="button" class="tb" data-q="Show the highlights" id="tb1"></button>
+          <button type="button" class="tb" data-q="What is this video about?" id="tb2"></button>
+          <button type="button" class="tb" id="tb3"></button>
+          <span class="hint">Shift + ↵ for new line</span>
+        </div>
+        <div class="line">
+          <button type="button" class="rnd plain" title="Upload a video" data-up id="clip"></button>
+          <textarea id="q" rows="1" placeholder="Ask about a video, or drop one here to analyse it…"></textarea>
+          <button class="rnd go" id="send" disabled aria-label="Send"></button>
+        </div>
+      </form>
+      <div class="disc">AURIS answers only from what the system detected. Check key moments in the video.</div>
+    </div>
+  </section>
+
+  <aside class="canvas" id="canvas"><div class="cvin" id="cv"></div></aside>
+</div>
+<input type="file" id="file" accept=".mp4,.mov,.mkv,video/*" hidden>
+<div id="drop"><div>Drop the video. AURIS will analyse it</div></div>
+
+<script>
+/* ---------- icons ---------- */
+const P = {
+  spark: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  film: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/>',
+  chef: '<path d="M6 13a4 4 0 1 1 2.5-7.1A4 4 0 0 1 16 5a4 4 0 0 1 2 7.5V19H6z"/><path d="M6 16h12"/>',
+  mtn: '<path d="M3 20l6-10 4 6 3-4 5 8z"/>', up: '<path d="M12 19V5M5 12l7-7 7 7"/>', clip: '<path d="M21 11l-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7"/>',
+  panel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/>', chev: '<path d="M6 9l6 6 6-6"/>', arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  play: '<path d="M7 5l12 7-12 7z"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  bulb: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  chart: '<path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/>', hl: '<path d="M4 7h16M4 12h10M4 17h6"/>', copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+  code: '<path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/>', down: '<path d="M12 4v12M6 11l6 6 6-6M5 20h14"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>', menu: '<path d="M4 7h16M4 12h16M4 17h16"/>', x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  cpu: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>', eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+};
+const ic = (n, s = "") => `<svg class="i" viewBox="0 0 24 24" ${s}>${P[n]}</svg>`;
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (t) => { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
+const now = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const api = async (u, o) => { const r = await fetch(u, o); if (!r.ok) throw new Error((await r.json().catch(() => ({}))).detail || r.statusText); return r.json(); };
+const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (_) { return null; } },
+                set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} } };
+
+let videos = [], cur = null, reel = null, threads = store.get("auris.threads") || {}, closed = store.get("auris.closed") || {}, uploading = false, model = null;
+
+/* static icons */
+$("#mk").innerHTML = ic("spark"); $("#plus").innerHTML = ic("plus"); $("#srch").innerHTML = ic("search"); $("#who").innerHTML = ic("user");
+$("#menu").innerHTML = ic("menu"); $("#clip").innerHTML = ic("clip"); $("#send").innerHTML = ic("up");
+$("#segv").innerHTML = ic("bolt") + "AURIS Vision"; $("#segl").innerHTML = ic("cpu") + "Local reasoning";
+$("#tb1").innerHTML = ic("hl") + "Highlights"; $("#tb2").innerHTML = ic("eye") + "Overview"; $("#tb3").innerHTML = ic("panel") + "Video panel";
+
+/* ---------- sidebar ---------- */
+async function loadList() {
+  videos = await api("/api/videos");
+  $("#mcount").textContent = `${videos.filter((v) => v.has_video).length}/${videos.length} videos`;
+  $("#mbar").style.width = (100 * videos.filter((v) => v.has_video).length / Math.max(1, videos.length)) + "%";
+  renderSide();
+}
+function renderSide() {
+  const q = $("#search").value.toLowerCase();
+  const m = videos.filter((v) => v.id.toLowerCase().includes(q));
+  const recent = Object.keys(threads).filter((id) => threads[id].length && m.some((v) => v.id === id));
+  const G = [["recent", "Recent conversations", recent.map((id) => m.find((v) => v.id === id))],
+             ["up", "Your uploads", m.filter((v) => v.new)],
+             ["cook", "Kitchen · EPIC", m.filter((v) => !v.new && v.label === "cooking")],
+             ["fpv", "First-person sports", m.filter((v) => !v.new && v.label !== "cooking")]];
+  $("#hist").innerHTML = G.filter(([, , l]) => l.length).map(([k, g, l]) => {
+    const shut = closed[k] && !q;
+    return `<div class="grp ${shut ? "closed" : ""}" data-g="${k}">${ic("chev")}${g}<span class="n">${l.length}</span></div>` + (shut ? "" :
+      l.map((v) => `<div class="row ${cur && cur.id === v.id ? "on" : ""}" data-id="${esc(v.id)}">${ic(v.label === "cooking" ? "chef" : "mtn")}
+        <span class="nm">${esc(v.id)}</span><span class="sub">${fmt(v.duration)}</span></div>`).join(""));
+  }).join("") || `<div class="grp">No videos match</div>`;
+}
+
+/* ---------- context strip ---------- */
+function ctx() {
+  if (!cur) {
+    const last = Object.keys(threads).filter((id) => threads[id].length).pop();
+    $("#ctx").innerHTML = `<span class="pulse" style="color:var(--em)"></span><span class="lab">WORKSPACE</span><span class="sep">•</span>
+      <span class="nm">${videos.length} analysed videos on this computer</span><span class="m">(fully offline)</span>
+      ${last ? `<a data-open="${esc(last)}">Resume ${esc(last)} ${ic("arrow")}</a>` : ""}`;
+  } else {
+    const kind = cur.is_cooking ? "Kitchen · EPIC" : "First-person · " + cur.label.name;
+    $("#ctx").innerHTML = `<span class="badge">${cur.is_cooking ? "COOKING" : "FPV"}</span><span class="sep">/</span><span class="nm">${esc(cur.id)}</span>
+      <span class="m">${esc(kind)} · ${fmt(cur.duration)}</span>
+      <a id="ctxv">${$("#canvas").classList.contains("open") ? "Hide video" : "Open video"} ${ic("arrow")}</a>`;
+    $("#ctxv").onclick = () => openCanvas(!$("#canvas").classList.contains("open"));
+  }
+  const r = $("#ctx a[data-open]"); if (r) r.onclick = () => openVideo(r.dataset.open);
+}
+
+/* ---------- hero ---------- */
+function greet() { const h = new Date().getHours(); return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening"; }
+function hero() {
+  cur = null; stopReel(); renderSide(); ctx(); openCanvas(false); $("#cvbtn").hidden = true;
+  const find = (f) => videos.find(f);
+  const kit = find((v) => v.id === "P01_12") || find((v) => v.label === "cooking");
+  const ski = find((v) => v.label === "ski") || find((v) => v.label !== "cooking");
+  const long = find((v) => v.id === "P01_11") || kit;
+  const feat = [find((v) => v.id === "P01_11"), find((v) => v.label === "surfing"), find((v) => v.id === "P29_05"), find((v) => v.label === "parkour")].filter(Boolean);
+  const nc = videos.filter((v) => v.label === "cooking").length, nf = videos.length - nc;
+  $("#thread").innerHTML = `<div class="hero">
+    <div class="orb">${ic("spark")}</div>
+    <h1>${greet()}, <em>Modern Global</em></h1>
+    <div class="lead">What would you like to find in a video today?</div>
+    <div class="caps"><span class="badge"><span class="pulse"></span>AURIS Vision</span><span class="badge dim">${ic("film")} Action detection</span>
+      <span class="badge dim">${ic("hl")} Highlights</span><span class="badge dim">${ic("chart")} Importance</span><span class="badge dim">${ic("cpu")} ${esc(model || "Local LLM")}</span></div>
+    <div class="cards">
+      ${card("up", "Analyse a new video", "Upload an MP4 and AURIS finds the actions, the sport and the best moments, on this computer.", "Full pipeline", "upload")}
+      ${kit ? card("search", "Find an action", `When do they open the fridge in ${kit.id}? Ask in plain words and jump to the moment.`, "Action search", "q:" + kit.id + ":When do they open the fridge?") : ""}
+      ${ski ? card("hl", "Watch the highlights", `Play only the key moments of ${ski.id}, a ${ski.label} video, in ${ski.highlights} short segments.`, "Highlight reel", "q:" + ski.id + ":Show the best moments") : ""}
+      ${long ? card("clock", "What happens at a time?", `Ask what happens at 5:12 in ${long.id}, or between any two times.`, "Timeline", "q:" + long.id + ":What happens at 5:12?") : ""}
+    </div>
+    <div class="sechead">${ic("film")}<h2>Featured videos</h2><span class="badge dim">${nc} kitchen · ${nf} sports</span><a id="browse">Browse all ${ic("arrow")}</a></div>
+    <div class="gpts">${feat.map((v) => `<button class="gpt" data-id="${esc(v.id)}"><div class="h"><div class="ic">${ic(v.label === "cooking" ? "chef" : "mtn")}</div>
+      <span class="tag">${v.label === "cooking" ? "Kitchen" : esc(v.label)}</span></div><b>${esc(v.id)}</b>
+      <span class="d">${v.label === "cooking" ? "First-person cooking with detected actions." : "First-person " + esc(v.label) + " with importance scores."}</span>
+      <div class="f"><span>${fmt(v.duration)} • ${v.highlights} highlights</span>${ic("play")}</div></button>`).join("")}</div></div>`;
+  document.querySelectorAll(".card").forEach((c) => (c.onclick = () => {
+    const a = c.dataset.a; if (a === "upload") return $("#file").click();
+    const [, id, q] = a.split(":"); openVideo(id).then(() => ask(q));
+  }));
+  document.querySelectorAll(".gpt").forEach((c) => (c.onclick = () => openVideo(c.dataset.id)));
+  $("#browse").onclick = () => { $("#side").classList.add("show"); $("#search").focus(); };
+}
+function card(icon, t, d, f, a) {
+  return `<button class="card" data-a="${esc(a)}"><div class="ic">${ic(icon)}</div><b>${esc(t)}</b><span class="d">${esc(d)}</span>
+    <div class="f"><span>${esc(f)}</span>${ic("arrow")}</div></button>`;
+}
+
+/* ---------- open a video ---------- */
+async function openVideo(id) {
+  stopReel();
+  cur = await api("/api/video/" + encodeURIComponent(id));
+  $("#side").classList.remove("show");
+  renderSide(); renderCanvas(); openCanvas(innerWidth > 900); $("#cvbtn").hidden = false;
+  renderThread(); ctx(); $("#q").focus();
+}
+
+function stats() {
+  const hl = cur.highlights.reduce((a, [s, e]) => a + e - s, 0);
+  return { hl, pct: 100 * hl / cur.duration, n: cur.events.length };
+}
+function tiles(cls = "tiles") {
+  const s = stats();
+  return `<div class="${cls}">
+    <div class="tile"><div class="k">Label</div><div class="v em">${esc(cur.label.name)}</div><div class="d">confidence ${cur.label.score.toFixed(2)}</div></div>
+    <div class="tile"><div class="k">Duration</div><div class="v">${fmt(cur.duration)}</div><div class="d">${cur.duration.toFixed(1)} s</div></div>
+    <div class="tile"><div class="k">Highlights</div><div class="v">${Math.round(s.hl)} s</div><div class="d">${cur.highlights.length} segment(s) · ${s.pct.toFixed(1)}%</div></div>
+    <div class="tile"><div class="k">${cur.is_cooking ? "Actions" : "Peak moment"}</div>
+      <div class="v">${cur.is_cooking ? s.n : peak()}</div><div class="d">${cur.is_cooking ? "confident detections" : "highest importance"}</div></div></div>`;
+}
+function peak() { if (!cur.importance.length) return "—"; const p = cur.importance.reduce((a, b) => (b[1] > a[1] ? b : a)); return fmt(p[0]); }
+
+function timeline(id) {
+  const W = 1000, H = 64, d = cur.duration, x = (t) => (t / d) * W;
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="g${id}" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#00d492" stop-opacity=".35"/><stop offset="1" stop-color="#00d492" stop-opacity="0"/></linearGradient></defs>`;
+  for (const [a, b] of cur.highlights) s += `<rect x="${x(a)}" y="0" width="${Math.max(2, x(b) - x(a))}" height="${H}" fill="rgba(0,212,146,.12)"/><rect x="${x(a)}" y="${H - 4}" width="${Math.max(2, x(b) - x(a))}" height="4" fill="#00d492"/>`;
+  if (cur.is_cooking) for (const e of cur.events) { const hi = e.score >= 0.3;
+    s += `<rect x="${x(e.start)}" y="${hi ? 10 : 24}" width="${Math.max(1.6, x(e.end) - x(e.start))}" height="${hi ? 30 : 16}" rx="1" fill="${hi ? "#3b82f6" : "#2c4a80"}"><title>${fmt(e.start)} ${esc(e.text)}</title></rect>`; }
+  else if (cur.importance.length) {
+    const pts = cur.importance.map(([t, v]) => [x(t), H - 8 - v * (H - 16)]);
+    s += `<path d="M${pts[0][0]},${H - 4} ${pts.map((p) => "L" + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ")} L${pts[pts.length - 1][0]},${H - 4} Z" fill="url(#g${id})"/>`;
+    s += `<polyline points="${pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ")}" fill="none" stroke="#00d492" stroke-width="2" vector-effect="non-scaling-stroke"/>`;
+  }
+  return s + `<line class="head" x1="-5" x2="-5" y1="0" y2="${H}" stroke="#f3f4f6" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function tlbox(id) {
+  const q = (f) => fmt(cur.duration * f);
+  return `<div class="tlbox"><div class="tlhead"><span>${cur.is_cooking ? "Detected actions over time" : "Importance over time"}</span><span class="spacer"></span>
+    <span><span class="sw" style="background:#00d492"></span>highlight</span>
+    ${cur.is_cooking ? `<span><span class="sw" style="background:#3b82f6"></span>high confidence</span><span><span class="sw" style="background:#2c4a80"></span>medium</span>`
+                     : `<span><span class="sw" style="background:#00d492"></span>importance</span>`}</div>
+    <div class="tl" data-tl title="Click to jump">${timeline(id)}</div>
+    <div class="axis"><span>0:00</span><span>${q(.25)}</span><span>${q(.5)}</span><span>${q(.75)}</span><span>${fmt(cur.duration)}</span></div></div>`;
+}
+
+function renderCanvas() {
+  $("#cv").innerHTML = `<div class="cvhead"><span class="rec"></span><span class="lab">VIDEO · ${esc(cur.id)}</span><span class="spacer"></span>
+      <button class="ghost" id="cvclose">${ic("x")}</button></div>
+    <div class="cvbody">
+      ${cur.has_video ? `<div class="frame"><video id="vid" src="/media/${encodeURIComponent(cur.id)}" controls preload="metadata"></video>
+          <span class="ov badge">${esc(cur.label.name)} · ${cur.label.score.toFixed(2)}</span></div>`
+        : `<div class="novid">The video file for ${esc(cur.id)} isn't on this computer. The analysis is still available.</div>`}
+      <div class="ctl"><button class="pbtn" id="reel" ${cur.has_video && cur.highlights.length ? "" : "disabled"}>${ic("play")}<span>Play highlights</span></button>
+        <button class="jbtn" id="jsonbtn" aria-expanded="false" aria-controls="jsonbox">${ic("code")}<span>JSON output</span></button>
+        <span class="badge dim">${cur.highlights.length} segment(s)</span></div>
+      <section class="jsonbox" id="jsonbox" hidden>
+        <div class="jhead"><span class="lab">OUTPUTS / ${esc(cur.id)}.json</span><span class="spacer"></span>
+          <button class="ghost sm" id="jcopy" title="Copy the JSON">${ic("copy")}<span>Copy</span></button>
+          <a class="ghost sm" id="jdl" href="/api/json/${encodeURIComponent(cur.id)}?download=1" download="${esc(cur.id)}.json" title="Download the JSON file">${ic("down")}<span>Download</span></a></div>
+        <div class="jmeta" id="jmeta">Loading…</div>
+        <pre class="json" id="jsonpre" tabindex="0"></pre>
+      </section>
+      ${tlbox("c")}
+      <div class="mini" style="margin-top:12px">${tiles("mini").replace(/^<div class="mini">|<\/div>$/g, "")}</div>
+      ${cur.is_cooking ? `<details><summary>${ic("film")}${cur.events.length} DETECTED ACTIONS</summary><div class="evs">${cur.events.map((e) =>
+        `<div class="ev" data-t="${e.start}"><span class="t">${e.time}</span><span class="cf" style="background:${e.score >= .3 ? "#3b82f6" : "#2c4a80"}"></span><span>${esc(e.text)}</span><span class="s">${e.score.toFixed(2)}</span></div>`).join("")}</div></details>` : ""}
+    </div>`;
+  const v = $("#vid");
+  if (v) v.addEventListener("timeupdate", () => { heads(v.currentTime); onReel(v); });
+  $("#reel").onclick = () => (reel ? stopReel() : startReel());
+  $("#jsonbtn").onclick = toggleJson;
+  $("#jcopy").onclick = copyJson;
+  $("#cvclose").onclick = () => openCanvas(false);
+  wireTimelines(); document.querySelectorAll(".ev").forEach((el) => (el.onclick = () => seek(+el.dataset.t)));
+}
+
+/* ---------- JSON output (the exact submission file for this video) ---------- */
+let jsonText = { id: null, raw: "" };
+function prettyJson(d) {
+  // One line per action / highlight so 2000 actions stay readable; everything else indented normally.
+  const one = (o) => JSON.stringify(o).replace(/,"/g, ', "').replace(/":/g, '": ');
+  const lines = ["{"];
+  const keys = Object.keys(d);
+  keys.forEach((k, i) => {
+    const end = i < keys.length - 1 ? "," : "";
+    const v = d[k];
+    if (Array.isArray(v) && v.length && typeof v[0] === "object") {
+      lines.push(`  "${k}": [`);
+      v.forEach((x, j) => lines.push(`    ${one(x)}${j < v.length - 1 ? "," : ""}`));
+      lines.push(`  ]${end}`);
+    } else lines.push(`  "${k}": ${one(v)}${end}`);
+  });
+  lines.push("}");
+  return lines.join("\n");
+}
+function highlightJson(src) {
+  return esc(src).replace(/("(?:[^"\\]|\\.)*")(\s*:)?|\b(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\b|\b(true|false|null)\b/gi,
+    (m, str, colon, num, lit) => str ? (colon ? `<span class="jk">${str}</span>${colon}` : `<span class="js">${str}</span>`)
+      : num ? `<span class="jn">${num}</span>` : `<span class="jl">${lit}</span>`);
+}
+async function toggleJson() {
+  const box = $("#jsonbox"), btn = $("#jsonbtn"), open = box.hidden;
+  box.hidden = !open; btn.classList.toggle("on", open); btn.setAttribute("aria-expanded", String(open));
+  if (!open || jsonText.id === cur.id) return;
+  try {
+    const r = await fetch("/api/json/" + encodeURIComponent(cur.id));
+    if (!r.ok) throw new Error(r.statusText);
+    const raw = await r.text(), d = JSON.parse(raw);
+    const pretty = prettyJson(d);
+    jsonText = { id: cur.id, raw };  // Copy gives the file byte for byte; the view is re-indented for reading
+    const kb = (new Blob([raw]).size / 1024).toFixed(1);
+    $("#jmeta").innerHTML = `${Object.keys(d).length} fields · ${(d.actions || []).length} actions · ${(d.highlights || []).length} highlights · ${kb} KB
+      · <span style="color:var(--em)">${["team_id", "video_id", "duration_sec", "label", "actions", "highlights"].every((k) => k in d) ? "all 6 required fields present" : "missing fields"}</span>`;
+    $("#jsonpre").innerHTML = highlightJson(pretty);
+  } catch (e) { $("#jmeta").textContent = "Couldn't load the JSON: " + e.message; }
+}
+async function copyJson() {
+  const b = $("#jcopy");
+  try { await navigator.clipboard.writeText(jsonText.raw); b.querySelector("span").textContent = "Copied"; }
+  catch (_) {  // clipboard API unavailable: select the text instead
+    const r = document.createRange(); r.selectNodeContents($("#jsonpre")); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    b.querySelector("span").textContent = "Selected";
+  }
+  setTimeout(() => { const x = $("#jcopy span"); if (x) x.textContent = "Copy"; }, 1600);
+}
+function wireTimelines() {
+  document.querySelectorAll("[data-tl]").forEach((t) => (t.onclick = (e) => { const r = t.getBoundingClientRect(); seek((e.clientX - r.left) / r.width * cur.duration); }));
+}
+function heads(t) { const X = t / cur.duration * 1000; document.querySelectorAll("line.head").forEach((h) => { h.setAttribute("x1", X); h.setAttribute("x2", X); }); }
+function openCanvas(on) {
+  $("#canvas").classList.toggle("open", !!on);
+  $("#cvbtn").innerHTML = ic("panel") + (on ? "Hide video" : "Show video"); $("#cvbtn").classList.toggle("on", !!on);
+  const a = $("#ctxv"); if (a) a.innerHTML = (on ? "Hide video " : "Open video ") + ic("arrow");
+}
+function seek(t) { openCanvas(true); const v = $("#vid"); if (!v) return; stopReel(); v.currentTime = Math.max(0, t); v.play(); }
+function startReel() { const v = $("#vid"); if (!v) return; reel = { i: 0 }; $("#reel span").textContent = "Stop"; v.currentTime = cur.highlights[0][0]; v.play(); }
+function onReel(v) { if (!reel) return; if (v.currentTime >= cur.highlights[reel.i][1]) { reel.i++;
+  if (reel.i >= cur.highlights.length) { v.pause(); stopReel(); } else v.currentTime = cur.highlights[reel.i][0]; } }
+function stopReel() { reel = null; const b = $("#reel span"); if (b) b.textContent = "Play highlights"; }
+
+/* ---------- conversation ---------- */
+const SRC = { pattern: "pattern match", rules: "rule parser", model: "llama3.2", keywords: "keywords" };
+function report() {
+  return `<div class="report"><h3>${ic("chart")} Video analysis: ${esc(cur.id)}</h3>
+    <div class="sub">${cur.is_cooking ? "EPIC SlowFast + ActionFormer, verb–noun actions fused at IoU 0.5" : "CLIP ViT-L/14 at 2 fps, category classifier + importance scorer"}</div>
+    ${tiles()}${tlbox("r")}
+    <div class="take"><div class="ic">${ic("bulb")}</div><div><b>Summary</b><p>${esc(cur.summary)}</p></div></div></div>`;
+}
+function suggestions() {
+  return cur.is_cooking ? ["Show the highlights", "When do they open the fridge?", "What happens at 1:00?", "Did they take or put a plate first?"]
+                        : ["Show the best moments", "What happens at 0:30?", "What sport is this?", "Give me a summary"];
+}
+function renderThread() {
+  const t = threads[cur.id] || [];
+  $("#thread").innerHTML = `<div class="col" id="col">
+    ${botHead("pipeline", cur.is_cooking ? "Cooking video" : "Sports video")}
+    <div class="strip"><span class="pulse" style="color:var(--em)"></span><span class="lab">ANALYSIS</span><span>• ${cur.is_cooking
+      ? `${cur.events.length} confident actions, ${cur.highlights.length} highlight(s) selected` : `${esc(cur.label.name)} at ${cur.label.score.toFixed(2)}, ${cur.highlights.length} highlight(s) selected`}</span></div>
+    ${report()}
+    <div class="sugg-lab">SUGGESTED QUESTIONS</div><div class="chips">${suggestions().map((q) => `<button class="chip" data-q="${esc(q)}">${ic("spark")}${esc(q)}</button>`).join("")}</div>
+    ${t.map((m) => (m.u ? user(m.u, m.at) : bot(m.b, m.refs, m.src, m.ms))).join("")}</div>`;
+  wire(); scrollEnd();
+}
+const botHead = (src, extra) => `<div class="bh"><span class="spark"><i>A</i></span><b>AURIS</b>
+  <span class="badge ${src === "model" ? "az" : ""}">${esc(SRC[src] || src)}</span>${extra ? `<span style="color:var(--t3);font:var(--fs-xs) var(--mono)">${esc(extra)}</span>` : ""}</div>`;
+const user = (txt, at) => `<div class="u"><div class="meta">Modern Global · ${esc(at || now())}</div><div class="body">${esc(txt)}</div></div>`;
+const bot = (txt, refs, src, ms) => `<div class="b">${botHead(src || "rules").replace("</div>", `<span class="tele">${ic("bolt")}${ms ?? 0} ms</span></div>`)}
+  <div class="body">${esc(txt)}</div>${refs && refs.length ? `<div class="chips">${refs.map((r) => `<button class="chip t" data-t="${r.t}">${ic("play")}${esc(r.label)}</button>`).join("")}</div>` : ""}
+  <div class="acts"><button title="Copy" data-copy="${esc(txt)}">${ic("copy")}</button>${refs && refs.length ? `<button title="Play the first moment" data-t="${refs[0].t}">${ic("play")}</button>` : ""}</div></div>`;
+function wire() {
+  document.querySelectorAll("#thread [data-t]").forEach((c) => (c.onclick = () => seek(+c.dataset.t)));
+  document.querySelectorAll("#thread .chip[data-q]").forEach((c) => (c.onclick = () => ask(c.dataset.q)));
+  document.querySelectorAll("#thread [data-copy]").forEach((c) => (c.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(c.dataset.copy); c.innerHTML = ic("spark"); }));
+  wireTimelines();
+}
+function scrollEnd() { const t = $("#thread"); t.scrollTop = t.scrollHeight; }
+function push(id, m) { (threads[id] = threads[id] || []).push(m); threads[id] = threads[id].slice(-60); store.set("auris.threads", threads); }
+
+async function ask(q) {
+  if (!q.trim()) return;
+  if (!cur) { flash("Pick a video first. Choose one on the left or below, or upload your own."); return; }
+  const id = cur.id, at = now();
+  push(id, { u: q, at }); $("#col").insertAdjacentHTML("beforeend", user(q, at) + `<div class="b" id="wait">${botHead(cur.is_cooking ? "rules" : "pattern")}<div class="typing"><span></span><span></span><span></span></div></div>`);
+  scrollEnd(); renderSide();
+  try {
+    const r = await api("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, q }) });
+    push(id, { b: r.text, refs: r.refs, src: r.source, ms: r.ms });
+    if (cur && cur.id === id) { $("#wait").outerHTML = bot(r.text, r.refs, r.source, r.ms); wire(); scrollEnd(); }
+  } catch (e) { const w = $("#wait"); if (w) w.outerHTML = bot("Sorry, that didn't work: " + e.message, [], "rules", 0); }
+}
+
+/* ---------- upload ---------- */
+function flash(t, keep) {
+  let el = $("#jobmsg");
+  const host = $("#col") || $(".hero");
+  if (!el && host) { host.insertAdjacentHTML("beforeend", `<div class="b" id="jobmsg">${botHead("pipeline")}<div class="strip"><span class="pulse" style="color:var(--em)"></span><span class="lab">STATUS</span><span class="jt"></span></div></div>`); el = $("#jobmsg"); }
+  if (el) { el.querySelector(".jt").textContent = t; scrollEnd(); }
+  if (!keep) setTimeout(() => { const e = $("#jobmsg"); if (e && !uploading) e.remove(); }, 5000);
+}
+function uploadFile(file) {
+  if (!file) return;
+  if (!/\.(mp4|mov|mkv)$/i.test(file.name)) return flash("Please choose an .mp4, .mov or .mkv file.");
+  if (uploading) return flash("Another video is still being analysed.", true);
+  uploading = true; $("#newbtn").classList.add("busy"); $("#ready").className = "badge az"; $("#ready").innerHTML = '<span class="pulse"></span>Analysing';
+  flash(`Uploading ${file.name}…`, true);
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/api/upload?name=" + encodeURIComponent(file.name));
+  xhr.upload.onprogress = (e) => { if (e.lengthComputable) flash(`Uploading ${file.name}… ${Math.round(100 * e.loaded / e.total)}%`, true); };
+  xhr.onload = () => { let r = {}; try { r = JSON.parse(xhr.responseText); } catch (_) {}
+    if (xhr.status !== 200) return finish(`Upload failed: ${r.detail || xhr.statusText}`); poll(r.job); };
+  xhr.onerror = () => finish("Upload failed.");
+  xhr.send(file);
+}
+async function poll(job) {
+  let j; try { j = await api("/api/analyze/" + job); } catch (e) { return finish("Lost track of the analysis: " + e.message); }
+  if (j.status === "running") { flash(`Analysing ${j.id}… ${fmt(j.elapsed)}. Running the full system (about 2 min per 3 min of kitchen video).`, true); setTimeout(() => poll(job), 2000); return; }
+  if (j.status === "done") { finish(""); await loadList(); openVideo(j.id); }
+  else finish("The analysis failed: " + (j.log || "").split("\n").filter(Boolean).slice(-2).join(" "));
+}
+function finish(err) {
+  uploading = false; $("#newbtn").classList.remove("busy"); $("#ready").className = "badge"; $("#ready").innerHTML = '<span class="pulse"></span>Ready';
+  if (err) flash(err, true); else { const e = $("#jobmsg"); if (e) e.remove(); }
+}
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-up]").forEach((b) => (b.onclick = () => $("#file").click()));
+$("#file").onchange = (e) => { uploadFile(e.target.files[0]); e.target.value = ""; };
+$("#newbtn").onclick = () => $("#file").click();
+addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); $("#file").click(); } });
+$("#search").oninput = renderSide;
+$("#hist").onclick = (e) => {
+  const g = e.target.closest(".grp[data-g]"); if (g) { closed[g.dataset.g] = !closed[g.dataset.g]; store.set("auris.closed", closed); return renderSide(); }
+  const r = e.target.closest(".row[data-id]"); if (r) openVideo(r.dataset.id);
+};
+$("#brand").onclick = hero;
+$("#menu").onclick = () => $("#side").classList.toggle("show");
+$("#cvbtn").onclick = () => openCanvas(!$("#canvas").classList.contains("open"));
+$("#tb3").onclick = () => cur ? openCanvas(!$("#canvas").classList.contains("open")) : flash("Pick a video first.");
+document.querySelectorAll(".tools .tb[data-q]").forEach((b) => (b.onclick = () => ask(b.dataset.q)));
+const ta = $("#q");
+ta.oninput = () => { ta.style.height = "auto"; ta.style.height = Math.min(180, ta.scrollHeight) + "px"; $("#send").disabled = !ta.value.trim(); };
+ta.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#form").requestSubmit(); } };
+$("#form").onsubmit = (e) => { e.preventDefault(); const q = ta.value.trim(); if (!q) return; ta.value = ""; ta.oninput(); ask(q); };
+let depth = 0;
+addEventListener("dragenter", (e) => { if ([...e.dataTransfer.types].includes("Files")) { depth++; $("#drop").classList.add("on"); } });
+addEventListener("dragleave", () => { if (--depth <= 0) { depth = 0; $("#drop").classList.remove("on"); } });
+addEventListener("dragover", (e) => e.preventDefault());
+addEventListener("drop", (e) => { e.preventDefault(); depth = 0; $("#drop").classList.remove("on"); uploadFile(e.dataTransfer.files[0]); });
+
+loadList().then(() => api("/api/status")).then((s) => {
+  model = s.model_ready ? s.model : null;
+  $("#mstat").textContent = s.model_ready ? "Local model ready" : "Keyword mode (Ollama off)";
+  $("#mmodel").textContent = s.model_ready ? s.model : "";
+  $("#segl").innerHTML = ic("cpu") + (s.model_ready ? s.model : "Keyword mode");
+  if (!s.model_ready) { $("#ready").className = "badge warn"; $("#ready").innerHTML = '<span class="pulse"></span>Keyword mode'; }
+}).catch((e) => ($("#mstat").textContent = "Error: " + e.message)).finally(async () => {
+  hero();
+  // Deep link for demos: #v=P01_12&q=When do they open the fridge?  (several questions: q=...&q=...)
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get("v")) {
+    await openVideo(h.get("v")); for (const q of h.getAll("q")) await ask(q);
+    const v = $("#vid"); if (v && h.get("t")) { v.currentTime = +h.get("t"); heads(+h.get("t")); }  // show a frame
+  }
+});
+</script>
+</body>
+</html>

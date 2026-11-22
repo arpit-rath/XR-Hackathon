@@ -118,7 +118,8 @@ def cooking_branch(video, vid, duration, cache_dir):
     return records
 
 
-def build(video, team_id, cache_dir=None, keep_actions_for_fpv=False):
+def build(video, team_id, cache_dir=None, keep_actions_for_fpv=False, extra=None):
+    """extra: a dict to fill with details the submission JSON leaves out (for the demo app)."""
     import encoder_a
     from highlights import epic_highlights, fpv_highlights
     from video_type import DECIDE_SEC
@@ -140,6 +141,10 @@ def build(video, team_id, cache_dir=None, keep_actions_for_fpv=False):
         label = out["label"]
         highlights = fpv_highlights(out, duration)
         actions = cooking_branch(video, vid, duration, cache_dir) if keep_actions_for_fpv else []
+        if extra is not None:
+            extra.update(importance=out["importance"], category_probs=out["category_probs"])
+    if extra is not None:
+        extra.update(p_cooking=p_cooking, video_type_top=top)
     return {"team_id": team_id, "video_id": vid, "duration_sec": r2(duration), "label": label,
             "actions": actions, "highlights": highlights}
 
@@ -175,13 +180,17 @@ def main():
     ap.add_argument("--cache-dir")
     ap.add_argument("--keep-actions-for-fpv", action="store_true",
                     help="also run the action detector on FPVSum videos (not scored; off by default)")
+    ap.add_argument("--extra", help="also write importance scores and class probabilities here (demo app)")
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     video, out = os.path.abspath(a.video), os.path.abspath(a.out)
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    t0, code = time.time(), 0
+    t0, code, extra = time.time(), 0, {}
     try:
-        result = build(video, a.team_id, a.cache_dir, a.keep_actions_for_fpv)
+        result = build(video, a.team_id, a.cache_dir, a.keep_actions_for_fpv, extra)
+        if a.extra:
+            with open(a.extra, "w") as f:
+                json.dump(extra, f)
     except Exception:
         log.error("pipeline failed for %s; writing a minimal valid file\n%s", video, traceback.format_exc())
         result, code = fallback(video, a.team_id), 1
