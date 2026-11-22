@@ -1,0 +1,38 @@
+# One environment for the whole Track 04 system: Python 3.10 (WSL2 Ubuntu 22.04), CUDA 12.8.
+#   pip install -r requirements.txt
+# Also needs: ffmpeg/ffprobe on PATH; ActionFormer at 61ea7eb with its NMS extension built
+# (cd libs/utils && python setup.py install); epic-kitchens-slowfast at bf50519. See pipeline/README.md.
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+# Shared
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+# 1.23.5, not 2.x: ActionFormer and epic-kitchens-slowfast still use aliases such as np.float that numpy 1.24 removed.
+numpy==1.23.5
+
+# Member 2: EPIC action detector (pipeline/)
+pandas==2.3.3
+pyyaml==6.0.3
+h5py==3.16.0
+av==17.1.0
+fvcore==0.1.5.post20221221
+iopath==0.1.10
+simplejson
+joblib
+tensorboard
+
+# Member 1: MP4 ingestion and decoding (video_ingest.py)
+# 4.11.0.86 is the newest opencv-python that still accepts numpy 1.x (master's requirements.txt asks for
+# numpy>=1.26, but video_ingest.py only uses basic numpy and runs on 1.23.5).
+opencv-python==4.11.0.86
+
+# Member 3: FPVSum importance and category (fpvsum/)
+# open_clip 4.2.2 asks for torch>=2.6, which torch 2.11 meets, so the --no-deps step from
+# fpvsum/requirements.txt is not needed here.
+open_clip_torch==4.2.2
+timm==1.0.31
+ftfy==6.3.1
+regex==2026.9.29   # 2026.11.19 (fpvsum/requirements.txt) needs Python 3.11+
+huggingface_hub==2.4.0
+safetensors==0.8.0
+tqdm==4.70.1
