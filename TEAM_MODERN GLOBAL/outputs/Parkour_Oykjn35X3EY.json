@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Parkour_Oykjn35X3EY",
+ "duration_sec": 156.94,
+ "label": {
+  "name": "parkour",
+  "score": 0.6978
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    3.5,
+    9.5
+   ]
+  },
+  {
+   "segment": [
+    44.5,
+    50.5
+   ]
+  },
+  {
+   "segment": [
+    97.5,
+    103.5
+   ]
+  }
+ ]
+}

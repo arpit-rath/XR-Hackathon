@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Longboarding_sgXJldYfbAs",
+ "duration_sec": 135.44,
+ "label": {
+  "name": "longboarding",
+  "score": 0.6309
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    0.0,
+    6.0
+   ]
+  },
+  {
+   "segment": [
+    80.5,
+    86.5
+   ]
+  },
+  {
+   "segment": [
+    129.44,
+    135.44
+   ]
+  }
+ ]
+}

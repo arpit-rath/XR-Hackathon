@@ -1,0 +1,42 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Plane_QsL_gCDHWHA",
+ "duration_sec": 205.52,
+ "label": {
+  "name": "plane",
+  "score": 0.1801
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    6.0,
+    12.0
+   ]
+  },
+  {
+   "segment": [
+    32.5,
+    38.5
+   ]
+  },
+  {
+   "segment": [
+    83.0,
+    89.0
+   ]
+  },
+  {
+   "segment": [
+    132.0,
+    138.0
+   ]
+  },
+  {
+   "segment": [
+    199.52,
+    205.52
+   ]
+  }
+ ]
+}

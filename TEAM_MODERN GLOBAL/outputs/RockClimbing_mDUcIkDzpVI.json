@@ -1,0 +1,66 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "RockClimbing_mDUcIkDzpVI",
+ "duration_sec": 377.07,
+ "label": {
+  "name": "rockclimbing",
+  "score": 0.7528
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    9.0,
+    15.0
+   ]
+  },
+  {
+   "segment": [
+    18.0,
+    24.0
+   ]
+  },
+  {
+   "segment": [
+    28.0,
+    34.0
+   ]
+  },
+  {
+   "segment": [
+    40.0,
+    46.0
+   ]
+  },
+  {
+   "segment": [
+    61.5,
+    67.5
+   ]
+  },
+  {
+   "segment": [
+    78.5,
+    84.5
+   ]
+  },
+  {
+   "segment": [
+    93.5,
+    99.5
+   ]
+  },
+  {
+   "segment": [
+    151.0,
+    157.0
+   ]
+  },
+  {
+   "segment": [
+    208.5,
+    214.5
+   ]
+  }
+ ]
+}

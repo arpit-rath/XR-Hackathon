@@ -1,6 +1,6 @@
 """Track 04 end to end for ONE video: MP4 -> the 6-field submission JSON. This is what run.sh calls.
 
-    python run_video.py VIDEO.mp4 OUT.json [--team-id team_04] [--cache-dir DIR] [--keep-actions-for-fpv]
+    python run_video.py VIDEO.mp4 OUT.json [--team-id "TEAM_MODERN GLOBAL"] [--cache-dir DIR] [--keep-actions-for-fpv]
 
 Everything is computed from the video itself (no manifest, no video-ID lookups):
   1. duration_sec  ffprobe on the video.
@@ -176,7 +176,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("video")
     ap.add_argument("out")
-    ap.add_argument("--team-id", default=os.environ.get("TEAM_ID", "team_04"))
+    ap.add_argument("--team-id", default=os.environ.get("TEAM_ID", "TEAM_MODERN GLOBAL"))
     ap.add_argument("--cache-dir")
     ap.add_argument("--keep-actions-for-fpv", action="store_true",
                     help="also run the action detector on FPVSum videos (not scored; off by default)")

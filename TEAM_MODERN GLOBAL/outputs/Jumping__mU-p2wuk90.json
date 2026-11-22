@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Jumping__mU-p2wuk90",
+ "duration_sec": 131.75,
+ "label": {
+  "name": "jumping",
+  "score": 0.603
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    36.5,
+    42.5
+   ]
+  },
+  {
+   "segment": [
+    42.5,
+    48.5
+   ]
+  },
+  {
+   "segment": [
+    87.5,
+    93.5
+   ]
+  }
+ ]
+}

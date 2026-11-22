@@ -1,0 +1,48 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "BikePolo_ccTGFdD18SM_1",
+ "duration_sec": 250.73,
+ "label": {
+  "name": "bikepolo",
+  "score": 0.811
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    49.0,
+    55.0
+   ]
+  },
+  {
+   "segment": [
+    144.0,
+    150.0
+   ]
+  },
+  {
+   "segment": [
+    152.0,
+    158.0
+   ]
+  },
+  {
+   "segment": [
+    169.5,
+    175.5
+   ]
+  },
+  {
+   "segment": [
+    179.0,
+    185.0
+   ]
+  },
+  {
+   "segment": [
+    189.0,
+    195.0
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Surfing_G7lPf1gF-W4",
+ "duration_sec": 204.13,
+ "label": {
+  "name": "surfing",
+  "score": 0.8128
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    1.5,
+    7.5
+   ]
+  },
+  {
+   "segment": [
+    122.0,
+    128.0
+   ]
+  },
+  {
+   "segment": [
+    130.0,
+    136.0
+   ]
+  },
+  {
+   "segment": [
+    141.0,
+    147.0
+   ]
+  },
+  {
+   "segment": [
+    187.5,
+    193.5
+   ]
+  }
+ ]
+}

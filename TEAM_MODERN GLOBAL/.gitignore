@@ -1,0 +1,6 @@
+# The 4 large weights live in the GitHub release (see fetch_weights.sh), not in git
+weights/actionformer_epic_*.pth.tar
+weights/SlowFast.pyth
+weights/clip_vit_l14_visual_fp16.pt
+weights/*.part
+__pycache__/

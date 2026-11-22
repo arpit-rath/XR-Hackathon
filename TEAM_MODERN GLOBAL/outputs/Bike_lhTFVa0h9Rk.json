@@ -1,0 +1,54 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Bike_lhTFVa0h9Rk",
+ "duration_sec": 287.51,
+ "label": {
+  "name": "bike",
+  "score": 0.6063
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    2.5,
+    8.5
+   ]
+  },
+  {
+   "segment": [
+    59.0,
+    65.0
+   ]
+  },
+  {
+   "segment": [
+    81.0,
+    87.0
+   ]
+  },
+  {
+   "segment": [
+    140.0,
+    146.0
+   ]
+  },
+  {
+   "segment": [
+    146.5,
+    152.5
+   ]
+  },
+  {
+   "segment": [
+    175.5,
+    181.5
+   ]
+  },
+  {
+   "segment": [
+    244.0,
+    250.0
+   ]
+  }
+ ]
+}

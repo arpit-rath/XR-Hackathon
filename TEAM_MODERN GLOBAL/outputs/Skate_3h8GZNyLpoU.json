@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Skate_3h8GZNyLpoU",
+ "duration_sec": 136.44,
+ "label": {
+  "name": "skate",
+  "score": 0.7156
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    84.5,
+    90.5
+   ]
+  },
+  {
+   "segment": [
+    98.5,
+    104.5
+   ]
+  },
+  {
+   "segment": [
+    104.5,
+    110.5
+   ]
+  }
+ ]
+}

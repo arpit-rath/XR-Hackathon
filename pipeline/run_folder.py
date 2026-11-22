@@ -1,7 +1,7 @@
 """Batch version of run_video.py: the same build() for every video given, models loaded once.
 This is how outputs/ was produced (with --cache-dir pointing at features the same code saved earlier).
 
-    python run_folder.py OUT_DIR VIDEO [VIDEO ...] [--team-id team_04] [--cache-dir DIR] [--redo]
+    python run_folder.py OUT_DIR VIDEO [VIDEO ...] [--team-id "TEAM_MODERN GLOBAL"] [--cache-dir DIR] [--redo]
 """
 import argparse
 import json
@@ -17,7 +17,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("out_dir")
     ap.add_argument("videos", nargs="+")
-    ap.add_argument("--team-id", default=os.environ.get("TEAM_ID", "team_04"))
+    ap.add_argument("--team-id", default=os.environ.get("TEAM_ID", "TEAM_MODERN GLOBAL"))
     ap.add_argument("--cache-dir")
     ap.add_argument("--redo", action="store_true", help="rebuild files that already exist")
     a = ap.parse_args()

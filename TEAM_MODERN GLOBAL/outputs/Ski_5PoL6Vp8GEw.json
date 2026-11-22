@@ -1,0 +1,42 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Ski_5PoL6Vp8GEw",
+ "duration_sec": 213.0,
+ "label": {
+  "name": "ski",
+  "score": 0.534
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    0.5,
+    6.5
+   ]
+  },
+  {
+   "segment": [
+    31.5,
+    37.5
+   ]
+  },
+  {
+   "segment": [
+    44.5,
+    50.5
+   ]
+  },
+  {
+   "segment": [
+    177.0,
+    183.0
+   ]
+  },
+  {
+   "segment": [
+    194.0,
+    200.0
+   ]
+  }
+ ]
+}

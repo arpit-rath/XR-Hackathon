@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Bike_x76VEPXYaI0",
+ "duration_sec": 123.3,
+ "label": {
+  "name": "bike",
+  "score": 0.5751
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    2.5,
+    8.5
+   ]
+  },
+  {
+   "segment": [
+    38.5,
+    44.5
+   ]
+  },
+  {
+   "segment": [
+    69.5,
+    75.5
+   ]
+  }
+ ]
+}

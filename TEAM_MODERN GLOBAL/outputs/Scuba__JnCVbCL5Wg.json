@@ -1,0 +1,36 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Scuba__JnCVbCL5Wg",
+ "duration_sec": 194.63,
+ "label": {
+  "name": "scuba",
+  "score": 0.6806
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    38.5,
+    44.5
+   ]
+  },
+  {
+   "segment": [
+    57.0,
+    63.0
+   ]
+  },
+  {
+   "segment": [
+    132.5,
+    138.5
+   ]
+  },
+  {
+   "segment": [
+    152.0,
+    158.0
+   ]
+  }
+ ]
+}

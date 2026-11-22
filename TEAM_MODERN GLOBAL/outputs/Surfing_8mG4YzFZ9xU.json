@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Surfing_8mG4YzFZ9xU",
+ "duration_sec": 124.02,
+ "label": {
+  "name": "surfing",
+  "score": 0.7376
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    0.0,
+    6.0
+   ]
+  },
+  {
+   "segment": [
+    26.5,
+    32.5
+   ]
+  },
+  {
+   "segment": [
+    34.5,
+    40.5
+   ]
+  }
+ ]
+}

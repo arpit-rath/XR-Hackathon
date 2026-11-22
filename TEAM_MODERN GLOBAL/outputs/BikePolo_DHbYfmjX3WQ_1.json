@@ -1,0 +1,36 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "BikePolo_DHbYfmjX3WQ_1",
+ "duration_sec": 171.76,
+ "label": {
+  "name": "bikepolo",
+  "score": 0.7629
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    80.5,
+    86.5
+   ]
+  },
+  {
+   "segment": [
+    89.0,
+    95.0
+   ]
+  },
+  {
+   "segment": [
+    118.0,
+    124.0
+   ]
+  },
+  {
+   "segment": [
+    135.0,
+    141.0
+   ]
+  }
+ ]
+}

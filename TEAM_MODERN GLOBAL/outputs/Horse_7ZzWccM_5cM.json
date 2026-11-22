@@ -1,0 +1,30 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Horse_7ZzWccM_5cM",
+ "duration_sec": 146.24,
+ "label": {
+  "name": "horse",
+  "score": 0.5863
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    49.0,
+    55.0
+   ]
+  },
+  {
+   "segment": [
+    65.0,
+    71.0
+   ]
+  },
+  {
+   "segment": [
+    81.0,
+    87.0
+   ]
+  }
+ ]
+}

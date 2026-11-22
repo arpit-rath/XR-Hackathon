@@ -3,12 +3,12 @@
 Runs fully offline on this machine: http://127.0.0.1:8000
     python server.py                       (settings below can be changed with environment variables)
 
-APP_OUTPUTS   submission JSON files (default: ../../submission/team_04/outputs)
+APP_OUTPUTS   submission JSON files (default: ../TEAM_MODERN GLOBAL/outputs)
 APP_EXTRA     extra details per video, <id>.extra.json (default: ../../app_data/extra)
 APP_NEW       where videos analysed from the app are written (default: ../../app_data/outputs)
 APP_VIDEOS    folders to look for the videos in, separated by ';' (default: E:\\EPIC_videos;E:\\FPVSum_videos)
 APP_UPLOADS   where uploaded videos are saved (default: ../../app_data/uploads)
-APP_PACKAGE   the team_04 folder whose run.sh analyses new videos (default: ../../submission/team_04)
+APP_PACKAGE   the submission package whose run.sh analyses new videos (default: ../TEAM_MODERN GLOBAL)
 APP_WSL_PY    Python environment inside WSL for run.sh (default: /root/epic/venv_int)
 """
 import json
@@ -32,11 +32,11 @@ import chat  # noqa: E402
 from timeline import VideoFacts, event_text, fmt_time  # noqa: E402
 
 TOP = HERE.parent.parent  # the Samsung_XR folder
-OUTPUTS = Path(os.environ.get("APP_OUTPUTS", TOP / "submission" / "team_04" / "outputs"))
+OUTPUTS = Path(os.environ.get("APP_OUTPUTS", HERE.parent / "TEAM_MODERN GLOBAL" / "outputs"))
 EXTRA = Path(os.environ.get("APP_EXTRA", TOP / "app_data" / "extra"))
 NEW = Path(os.environ.get("APP_NEW", TOP / "app_data" / "outputs"))
 VIDEO_DIRS = [Path(p) for p in os.environ.get("APP_VIDEOS", r"E:\EPIC_videos;E:\FPVSum_videos").split(";") if p]
-PACKAGE = Path(os.environ.get("APP_PACKAGE", TOP / "submission" / "team_04"))
+PACKAGE = Path(os.environ.get("APP_PACKAGE", HERE.parent / "TEAM_MODERN GLOBAL"))
 WSL_PY = os.environ.get("APP_WSL_PY", "/root/epic/venv_int")
 WSL_DISTRO = os.environ.get("APP_WSL_DISTRO", "Ubuntu-22.04")
 

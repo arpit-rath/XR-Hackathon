@@ -1,0 +1,60 @@
+{
+ "team_id": "TEAM_MODERN GLOBAL",
+ "video_id": "Boxing_6kDWXla9bMU",
+ "duration_sec": 345.4,
+ "label": {
+  "name": "boxing",
+  "score": 0.7723
+ },
+ "actions": [],
+ "highlights": [
+  {
+   "segment": [
+    34.5,
+    40.5
+   ]
+  },
+  {
+   "segment": [
+    63.5,
+    69.5
+   ]
+  },
+  {
+   "segment": [
+    173.5,
+    179.5
+   ]
+  },
+  {
+   "segment": [
+    227.5,
+    233.5
+   ]
+  },
+  {
+   "segment": [
+    284.0,
+    290.0
+   ]
+  },
+  {
+   "segment": [
+    310.5,
+    316.5
+   ]
+  },
+  {
+   "segment": [
+    316.5,
+    322.5
+   ]
+  },
+  {
+   "segment": [
+    322.5,
+    328.5
+   ]
+  }
+ ]
+}
