@@ -50,13 +50,14 @@ def probe_duration(video, ffmpeg=None):
     return int(h) * 3600 + int(mi) * 60 + float(s)
 
 
-def iter_frames(video, fps=DEFAULT_FPS, ffmpeg=None):
-    """Yield uint8 RGB frames (224x224x3) sampled at `fps`."""
+def iter_frames(video, fps=DEFAULT_FPS, ffmpeg=None, max_sec=None):
+    """Yield uint8 RGB frames (224x224x3) sampled at `fps` (only the first `max_sec` seconds if given)."""
     ffmpeg = ffmpeg or find_ffmpeg()
     vf = (f"fps={fps},"
           f"scale='if(gt(iw,ih),-2,{SIZE})':'if(gt(iw,ih),{SIZE},-2)':flags=bicubic,"
           f"crop={SIZE}:{SIZE}")
-    cmd = [ffmpeg, "-v", "error", "-nostdin", "-i", str(video), "-an", "-vf", vf,
+    limit = ["-t", str(max_sec)] if max_sec else []
+    cmd = [ffmpeg, "-v", "error", "-nostdin", "-i", str(video), *limit, "-an", "-vf", vf,
            "-pix_fmt", "rgb24", "-f", "rawvideo", "-"]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=10 ** 7)
     n = SIZE * SIZE * 3
@@ -103,12 +104,13 @@ class ClipVisual:
         f = self.visual(x).float()
         return torch.nn.functional.normalize(f, dim=-1).cpu().numpy()
 
-    def video_features(self, video, fps=DEFAULT_FPS, batch=64, ffmpeg=None):
-        """Return (features [T,768] float32, timestamps [T] seconds, duration_sec)."""
+    def video_features(self, video, fps=DEFAULT_FPS, batch=64, ffmpeg=None, max_sec=None):
+        """Return (features [T,768] float32, timestamps [T] seconds, duration_sec).
+        max_sec: encode only the first max_sec seconds (duration is still the whole video's)."""
         ffmpeg = ffmpeg or find_ffmpeg()
         duration = probe_duration(video, ffmpeg)
         feats, buf = [], []
-        for fr in iter_frames(video, fps, ffmpeg):
+        for fr in iter_frames(video, fps, ffmpeg, max_sec):
             buf.append(fr)
             if len(buf) == batch:
                 feats.append(self.encode(buf))
