@@ -13,7 +13,8 @@ you explore the result and ask questions about the video.
 | **Submission package** (`TEAM_ID/`: `run.sh`, `code/`, `weights/`, `requirements.txt`, `outputs/`, `README.md`) | [`TEAM_MODERN GLOBAL/`](TEAM_MODERN%20GLOBAL/) |
 | **187 output files** (all pass `validate.py`) | [`TEAM_MODERN GLOBAL/outputs/`](TEAM_MODERN%20GLOBAL/outputs/) |
 | **Large weights** (1.8 GB, over GitHub's 100 MB file limit) | Release [`weights-v1`](https://github.com/arpit-rath/XR-Hackathon/releases/tag/weights-v1); `run.sh` downloads them automatically |
-| **Presentation** | [`docs/AURIS - Team Modern Global - Track 04.pptx`](docs/AURIS%20-%20Team%20Modern%20Global%20-%20Track%2004.pptx) |
+| **Presentation** | [`docs/LangAI3.0_AI_Disclosure(1).docx`] |
+| **AI Disclosure Form ** | [`docs/AURIS - Team Modern Global - Track 04.pptx`](docs/AURIS%20-%20Team%20Modern%20Global%20-%20Track%2004.pptx) |
 | **Demo app** (brownie feature) | [`app/`](app/), with screenshots in [`docs/screenshots/`](docs/screenshots/) |
 
 ## Run it
